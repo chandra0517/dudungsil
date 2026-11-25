@@ -3,5 +3,5 @@
 // These two values are safe to publish: they only allow the live game rooms.
 window.DD_CONFIG = {
   supabaseUrl: "https://nbngghwziaeszerxdvoz.supabase.co",
-  supabaseKey: ""
+  supabaseKey: "sb_publishable_2zJ0eitL-6n0L-iprEtA8A_lbpFyyiZ"
 };
