@@ -70,6 +70,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-o
 .list{list-style:none;margin:0 0 12px;padding:0}
 .list li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}
 .list li small{display:block;color:var(--dim);font-size:13px}
+.list li>.chip{flex:none}
 .list li .r{display:flex;gap:8px;align-items:center;white-space:nowrap}
 .big{font-size:clamp(38px,10vw,56px);font-weight:700;line-height:1;margin:4px 0;text-shadow:-3px 0 var(--pink),3px 0 var(--cyan)}
 .sub{color:var(--dim);margin:0 0 12px;font-size:14px}
@@ -81,6 +82,9 @@ label.cb input{width:18px;height:18px}
 select{height:44px;background:#050a14;color:var(--ink);border:1px solid var(--line2);border-radius:3px;font:16px Galmuri,sans-serif;padding:0 8px}
 .hide{display:none!important}
 @media(max-width:600px){.rows li{padding:4px 6px;font-size:14px}.card{max-height:min(56svh,calc(var(--vvh,100svh) - 70px))}}
+.lang{display:flex;justify-content:flex-end;gap:4px;margin:-4px 0 8px}
+.lang button{height:30px;padding:0 10px;border:1px solid var(--line2);background:transparent;color:var(--faint);border-radius:2px;font:13px Galmuri,sans-serif;cursor:pointer}
+.lang button[aria-pressed=true]{color:var(--ink);background:var(--line2)}
 .abar{position:absolute;right:max(10px,env(safe-area-inset-right));width:8px;z-index:3;pointer-events:none;background:#0b1526c0;border:1px solid var(--line2);border-radius:2px;display:none}
 .abar:before{content:"";position:absolute;inset:0;background:linear-gradient(#e8706a33,#4de3ff22 60%,#7cf07a33)}
 .abar i{position:absolute;left:50%;width:10px;height:12px;margin-left:-5px;margin-bottom:-6px;border-radius:50%/45% 45% 55% 55%;border:1px solid #0b1526;transition:bottom .25s linear}
@@ -103,30 +107,31 @@ select{height:44px;background:#050a14;color:var(--ink);border:1px solid var(--li
 <canvas id="cv" aria-label="풍선을 타고 하늘로 오르는 크릴"></canvas>
 <div id="marks"></div><div id="names"></div><div class="abar" id="abar" aria-hidden="true"></div>
 <div class="tag" id="tag"></div>
-<div class="hud"><div class="alt"><b id="km">0 m</b><span id="zn">숲 바닥</span></div><div class="hr"><span class="pill">깃털 <b id="fth">0</b></span><span class="pill hide" id="sc"></span></div></div>
-<div class="titlebox" id="tb"><h1 class="title">두둥실</h1><br><p>가장 흔한 답이 가장 높이 오른다</p></div>
+<div class="hud"><div class="alt"><b id="km">0 m</b><span id="zn">숲 바닥</span></div><div class="hr"><span class="pill"><span data-en="Feathers">깃털</span> <b id="fth">0</b></span><span class="pill hide" id="sc"></span></div></div>
+<div class="titlebox" id="tb"><h1 class="title">두둥실</h1><br><p data-en="The most common answer climbs highest">가장 흔한 답이 가장 높이 오른다</p></div>
 <div class="stage">
 
 <section class="card" id="home">
-<div class="tabs" role="group" aria-label="모드"><button data-m="daily" aria-pressed="true">일일</button><button data-m="classic" aria-pressed="false">클래식</button><button data-m="endless" aria-pressed="false">무한</button></div>
+<div class="lang" role="group" aria-label="Language"><button data-l="ko" aria-pressed="true">한국어</button><button data-l="en" aria-pressed="false">English</button></div>
+<div class="tabs" role="group" aria-label="모드"><button data-m="daily" aria-pressed="true" data-en="Daily">일일</button><button data-m="classic" aria-pressed="false" data-en="Classic">클래식</button><button data-m="endless" aria-pressed="false" data-en="Endless">무한</button></div>
 <p class="desc" id="mdesc"></p>
-<div class="row"><button class="k" id="go">오르기 시작</button><button class="k c" id="mpbtn">멀티플레이</button></div>
-<div class="row" style="margin-top:6px"><button class="k g" id="helpbtn">게임 방법과 점수</button></div>
+<div class="row"><button class="k" id="go">오르기 시작</button><button class="k c" id="mpbtn" data-en="Multiplayer">멀티플레이</button></div>
+<div class="row" style="margin-top:6px"><button class="k g" id="helpbtn" data-en="How to play">게임 방법과 점수</button></div>
 </section>
 
 <section class="card hide" id="help">
-<div class="eb"><span>게임 방법</span></div>
-<p style="margin:0 0 10px">질문을 보고 한국 사람 대부분이 할 것 같은 답을 쓰세요. 흔한 답일수록 크릴이 높이 올라가요. 클래식 기준 1점은 20m, 700점이면 14km예요.</p>
+<div class="eb"><span data-en="How to play">게임 방법</span></div>
+<p style="margin:0 0 10px" data-en="Read the question and type the answer you think most people would give. The more common your answer, the higher your krill climbs. In Classic, 1 point is 20 m, so 700 points is 14 km.">질문을 보고 한국 사람 대부분이 할 것 같은 답을 쓰세요. 흔한 답일수록 크릴이 높이 올라가요. 클래식 기준 1점은 20m, 700점이면 14km예요.</p>
 <table id="tiers"></table>
 <p class="note" id="ainote"></p>
-<div class="row" style="margin-top:10px"><button class="k g" data-back>돌아가기</button></div>
+<div class="row" style="margin-top:10px"><button class="k g" data-back data-en="Back">돌아가기</button></div>
 </section>
 
 <section class="card hide" id="play">
 <div class="eb"><span id="qn"></span><span class="t" id="qt"></span></div>
 <div class="bar" id="tm"><i id="tmb"></i></div>
 <h2 class="q" id="qq"></h2>
-<form id="af"><input id="ai" autocomplete="off" placeholder="가장 흔한 답은?" maxlength="30"><button class="k" type="submit">제출</button><button class="k g" type="button" id="pass">패스</button></form>
+<form id="af"><input id="ai" autocomplete="off" placeholder="가장 흔한 답은?" data-en-ph="Most common answer?" maxlength="30"><button class="k" type="submit" data-en="Submit">제출</button><button class="k g" type="button" id="pass" data-en="Pass">패스</button></form>
 <p class="note hide" id="wait"></p>
 </section>
 
@@ -145,32 +150,32 @@ select{height:44px;background:#050a14;color:var(--ink);border:1px solid var(--li
 <p class="sub" id="dsub"></p>
 <div class="podium hide" id="podium"></div>
 <ul class="list" id="dres"></ul>
-<div class="row"><button class="k c" id="copy">결과 복사</button><button class="k hide" id="again">다시 하기</button><button class="k g" id="home2">처음으로</button></div>
+<div class="row"><button class="k c" id="copy" data-en="Copy results">결과 복사</button><button class="k hide" id="again" data-en="Play again">다시 하기</button><button class="k g" id="home2">처음으로</button></div>
 <p class="note" id="dnote"></p>
 </section>
 
 <section class="card hide" id="mpl">
-<div class="eb"><span>멀티플레이</span></div>
-<form id="nf"><input id="nick" maxlength="12" placeholder="닉네임" aria-label="닉네임" enterkeyhint="go"><button class="k" id="mkroom" type="submit">방 만들기</button></form>
-<label class="cb" style="margin-bottom:8px"><input type="checkbox" id="pubcb"> 공개 방으로 만들기 (최대 40명)</label>
-<form id="jf"><input id="jcode" inputmode="numeric" maxlength="6" placeholder="6자리 방 코드" aria-label="방 코드" enterkeyhint="go"><button class="k c" type="submit">참가</button></form>
-<div class="eb" style="margin-top:14px"><span>공개 방</span></div>
+<div class="eb"><span data-en="Multiplayer">멀티플레이</span></div>
+<form id="nf"><input id="nick" maxlength="12" placeholder="닉네임" data-en-ph="Nickname" aria-label="닉네임" enterkeyhint="go"><button class="k" id="mkroom" type="submit" data-en="Create room">방 만들기</button></form>
+<label class="cb" style="margin-bottom:8px"><input type="checkbox" id="pubcb"> <span data-en="Public room (up to 40 players)">공개 방으로 만들기 (최대 40명)</span></label>
+<form id="jf"><input id="jcode" inputmode="numeric" maxlength="6" placeholder="6자리 방 코드" data-en-ph="6-digit room code" aria-label="방 코드" enterkeyhint="go"><button class="k c" type="submit" data-en="Join">참가</button></form>
+<div class="eb" style="margin-top:14px"><span data-en="Public rooms">공개 방</span></div>
 <ul class="list" id="publist"></ul>
-<p class="note" id="mpmsg">방을 만든 뒤 초대 링크나 방 코드를 친구에게 보내세요.</p>
-<div class="row" style="margin-top:8px"><button class="k g" data-back>돌아가기</button></div>
+<p class="note" id="mpmsg" data-en="Create a room, then send the invite link or room code to your friends.">방을 만든 뒤 초대 링크나 방 코드를 친구에게 보내세요.</p>
+<div class="row" style="margin-top:8px"><button class="k g" data-back data-en="Back">돌아가기</button></div>
 </section>
 
 <section class="card hide" id="mpr">
-<div class="eb"><span>방 코드</span><span class="t" id="pcount"></span></div>
-<div class="row" style="justify-content:space-between;margin-bottom:8px"><span class="code" id="rcode"></span><button class="k g" id="copycode" style="flex:0">초대하기</button></div>
+<div class="eb"><span data-en="Room code">방 코드</span><span class="t" id="pcount"></span></div>
+<div class="row" style="justify-content:space-between;margin-bottom:8px"><span class="code" id="rcode"></span><button class="k g" id="copycode" style="flex:0" data-en="Invite">초대하기</button></div>
 <ul class="list" id="plist"></ul>
-<div class="row" id="hostctl"><select id="rounds" aria-label="질문 수"><option value="5">5문제</option><option value="7" selected>7문제</option><option value="10">10문제</option></select><button class="k" id="startmp">게임 시작</button></div>
-<p class="sub hide" id="waithost">방장이 게임을 시작하기를 기다리는 중…</p>
-<div class="row" style="margin-top:8px"><button class="k g" id="leave">나가기</button></div>
+<div class="row" id="hostctl"><select id="rounds" aria-label="질문 수"><option value="5" data-en="5 questions">5문제</option><option value="7" selected data-en="7 questions">7문제</option><option value="10" data-en="10 questions">10문제</option></select><button class="k" id="startmp" data-en="Start game">게임 시작</button></div>
+<p class="sub hide" id="waithost" data-en="Waiting for the host to start…">방장이 게임을 시작하기를 기다리는 중…</p>
+<div class="row" style="margin-top:8px"><button class="k g" id="leave" data-en="Leave">나가기</button></div>
 </section>
 
 </div></div>
-<script src="config.js?v=10"></script>
+<script src="config.js?v=11"></script>
 <script src="vendor/supabase.js"></script>
 <script>
 {
@@ -571,6 +576,416 @@ TV 예능 프로그램|무한도전;런닝맨;나 혼자 산다;1박2일;놀면 
 자연재해|지진;태풍;홍수;산불;가뭄;쓰나미;폭설;화산 폭발
 불 끄는 방법|소화기;물;119 신고/119;모래;담요;소방차;스프링클러;입으로 불기
 긴급 전화번호|112;119;120;114;1330;110;182;117`.split('\n').map(l=>{const[q,a]=l.split('|');return{q,a:a.split(';').map(s=>s.split('/'))}});
+const EN=`Things people often lose|umbrella;phone/cellphone/smartphone/mobile;wallet;keys/key;earphones/earbuds/airpods/headphones;remote/remote control/tv remote;pen/ballpoint pen;gloves
+First thing you do after waking up|check phone/look at phone/phone;go to the bathroom/bathroom/toilet/pee;drink water/water;turn off alarm/alarm/snooze;wash face/brush teeth/shower;stretch;check the time/time;make the bed
+Things you often buy at a convenience store|triangle kimbap/onigiri/rice ball/samgak kimbap;drink/drinks/soda/beverage/juice;coffee;snacks/chips;cup noodles/cup ramen/instant noodles/ramen;water;lunch box/dosirak/bento;ice cream
+Things you eat with fried chicken|beer;coke/cola/soda;pickled radish/chicken radish/radish;french fries/fries;soju;salad/cabbage salad;tteokbokki;rice
+Ingredients you add to ramen|egg/eggs;green onion/scallion/spring onion;cheese;kimchi;dumplings/mandu;rice cake/tteok;ham/spam;bean sprouts
+Things you think of with summer|watermelon;beach/ocean/sea;air conditioner/ac/aircon;vacation/holiday/summer break;ice cream;mosquito/mosquitoes;monsoon/rain/rainy season;bingsu/shaved ice/patbingsu
+Winter street snacks|bungeoppang/fish bread/fish-shaped bread/taiyaki;roasted sweet potato/sweet potato;hotteok/sweet pancake;fish cake/odeng/eomuk;steamed bun/hoppang;roasted chestnuts/chestnut;egg bread/gyeranppang;takoyaki
+Animal you most want to see at the zoo|lion;panda;giraffe;elephant;tiger;monkey;penguin;bear/polar bear
+Favorite school subject|pe/gym/physical education;art;music;math/maths;korean;english;science;social studies/history
+The one thing you'd bring to a desert island|knife/pocket knife;lighter/matches/fire;water;phone;tent;food/ramen;book;friend/family/partner
+Good place for a first date|movie theater/cinema/movies;cafe/coffee shop;amusement park/theme park/lotte world/everland;restaurant;han river/park;beach/ocean;museum/exhibition/gallery;mall/shopping mall/department store
+What you do when stressed|sleep/nap;eat/eating;exercise/workout/gym;listen to music/music;games/gaming/video games;drink/alcohol/drinking;karaoke/noraebang;shopping
+Foods you crave on rainy days|pajeon/korean pancake/scallion pancake/jeon/pancake;makgeolli/rice wine;kalguksu/knife noodles;ramen;sujebi/hand-torn noodle soup;jjamppong/spicy seafood noodles;tteokbokki;gukbap/rice soup
+What people do on the subway|look at phone/phone;sleep;listen to music/music;youtube/videos;games;read/reading/book;webtoon/webtoons/comics;space out/zone out/daydream
+Food that represents Korea|kimchi;bulgogi;bibimbap;tteokbokki;samgyeopsal/pork belly;fried chicken/chicken;ramen;kimbap/gimbap
+Birthday gift you want|money/cash;flowers/bouquet;phone;clothes;gift card/voucher;perfume;wallet;cake
+Things always in the fridge|kimchi;eggs/egg;water;milk;side dishes/banchan;gochujang/red pepper paste/doenjang;beer;fruit
+Things people are scared of|ghosts/ghost;bugs/insects/cockroach;snakes/snake;heights;death;darkness/dark;mom/mother;spiders/spider
+Places you think of for a school trip|gyeongju;jeju/jeju island;seoraksan/mount seorak;busan;everland;seoul;lotte world;jeonju
+Drinks you order at a cafe|americano/iced americano;cafe latte/latte;vanilla latte;cappuccino;green tea latte/matcha latte;lemonade/ade;smoothie;caramel macchiato/macchiato
+Food you eat on moving day|jajangmyeon/black bean noodles;jjamppong;sweet and sour pork/tangsuyuk;fried chicken/chicken;pizza;rice cake/sirutteok;fried rice;kimbap
+What you do the night before an exam|cram/cramming/study;all-nighter/stay up all night;sleep early/go to bed early;pray;drink coffee/coffee;make summary notes/review notes;worry;games
+Superpower you want|teleportation/teleport;flying/fly/flight;invisibility/invisible;stop time/time stop;mind reading/read minds;time travel;super strength/strength;healing
+Foods kids like|pizza;fried chicken/chicken;pork cutlet/tonkatsu/donkatsu;hamburger/burger;jajangmyeon/black bean noodles;tteokbokki;spaghetti/pasta;ice cream
+Pets kept at home|dog/puppy;cat;hamster;fish/goldfish;parrot/bird;rabbit/bunny;turtle;hedgehog
+Things you do on Korean holidays|ancestral rites/charye/memorial service;make jeon/fry pancakes;sebae/new year bow;yut nori/yutnori;see relatives/family;go-stop/hwatu/card game;make songpyeon;hear nagging/nagging
+Things you see at a wedding hall|wedding dress/dress;bouquet;ring/rings;cash gift/money envelope;buffet/food;groom/bride;photos/pictures;cake
+Things you always take to work|phone;wallet;transit card/card;earphones/airpods;keys;tumbler/coffee;id badge/employee id;bag
+What you do at the beach|swim/swimming;eat raw fish/sashimi/hoe;sandcastle/play in sand;take pictures/photos;collect shells/shells;surfing/surf;sunbathe/tan;walk
+What you do when you can't sleep|look at phone/phone;count sheep;listen to music/music;read/book;drink milk/milk;youtube;meditate/meditation;drink alcohol/alcohol
+Things that are red|apple;strawberry;fire truck;blood;rose;red light/traffic light;tomato;chili pepper/pepper
+Things you can see in the sky|clouds/cloud;sun;moon;stars/star;airplane/plane;birds/bird;rainbow;hot air balloon/balloon
+Things moms often nag about|study;go to bed early/sleep early;clean your room;eat/eat your food;get off your phone/stop using your phone;dress warmly/wear warm clothes;come home early;get married
+Company dinner menu|samgyeopsal/pork belly;beef/hanwoo;fried chicken/chicken;raw fish/sashimi;gopchang/intestines;jokbal/pig trotters;bossam/boiled pork;chinese food
+What you do on weekends|sleep in/sleep;netflix/drama/movies;clean/cleaning;date;exercise/workout;shopping;games;travel/trip
+Things you think of with Korea|kimchi;kpop/k-pop/bts/idols;hanbok;korean flag/taegukgi;seoul;kdrama/k-drama/drama;samsung;taekwondo
+Things you always order at karaoke|beer/alcohol;soda/drinks;extra time/bonus time;snacks;tambourine;microphone/mic;water;ice cream
+Things you pack for a trip|phone;charger/power bank;passport;wallet/money/card;clothes;toiletries/toothbrush;sunscreen;medicine/meds
+Food you want when sick|porridge/juk/rice porridge;seaweed soup/miyeokguk;samgyetang/ginseng chicken soup;gukbap;fruit;ice cream;ramen;sports drink/pocari
+Sports Koreans like|soccer/football;baseball;hiking;gym/weightlifting;golf;swimming;badminton;running/jogging
+What you eat after hiking|makgeolli/rice wine;pajeon/pancake;acorn jelly/dotorimuk;braised chicken/dakbokkeumtang;tofu kimchi;bibimbap;barley rice;noodles/janchi guksu
+Popular school lunch menu|fried chicken/chicken;pork cutlet/donkatsu;tteokbokki;jajangmyeon;spaghetti/pasta;curry;bulgogi;spicy pork/jeyuk
+Late-night delivery food|fried chicken/chicken;pizza;jokbal/pig trotters;tteokbokki;bossam;ramen;hamburger/burger;gopchang
+Things you think of with school|teacher;homework;exam/test;school lunch/cafeteria;friends/friend;school uniform/uniform;blackboard/chalkboard;playground/schoolyard
+What you do in a hospital waiting room|look at phone/phone;wait/waiting;read magazines/magazine;watch tv/tv;sleep;listen for your name/name;check in/register;space out/zone out
+Things often typed on KakaoTalk|lol/kkk/haha/lmao;ok/yeah/yes;hehe;lets go/go go;omg/wow;okay/k;sad/cry/tt;yep/yes sir
+Things convenience store workers often hear|do you need a bag/bag;cigarettes;checkout please/pay;receipt;where's the bathroom/bathroom;points/membership;heat it up/microwave;card please/card
+What you do on payday|save/savings;shopping;eat something good/eat out/beef;pay off credit card/credit card bill;give parents money/allowance for parents;pay rent/rent;fried chicken/chicken;drink/alcohol
+Most important thing in marriage|love;personality;money/finances;family;looks/appearance;trust;communication/talking;health
+What you do on a plane|sleep;watch movies/movies;eat in-flight meal/airplane food/meal;listen to music/music;read/book;look out the window/window;games;bathroom
+What you do on summer break|travel/trip;swimming/water park;sleep in/sleep;academy/hagwon/cram school;study;games;camping;part-time job/job
+Winter sports|skiing/ski;snowboarding/snowboard;skating/ice skating;gym;sledding/sled;hiking;swimming;yoga
+Things you think of with Christmas|santa/santa claus;christmas tree/tree;presents/gifts;snow;cake;carols/christmas carols;rudolph/reindeer;date
+Food eaten on Lunar New Year|tteokguk/rice cake soup;jeon/pancakes;dumplings/mandu;galbijjim/braised short ribs;japchae/glass noodles;sikhye/rice punch;namul/vegetables;hangwa/yakgwa/traditional sweets
+Food eaten on Chuseok|songpyeon/rice cakes;jeon/pancakes;galbijjim/braised short ribs;taro soup/torantang;japchae;sikhye;namul;fruit/pears/apples
+Things you think of with birthdays|cake/birthday cake;presents/gifts;seaweed soup/miyeokguk;celebration/congratulations;party;candles/candle;birthday song/happy birthday;friends
+Music genre for working out|hip hop/rap;kpop/k-pop;edm/electronic;pop;rock;trot;dance;ballad
+Amusement park rides|roller coaster;viking/pirate ship;drop tower/gyro drop;carousel/merry-go-round;bumper cars;log flume/flume ride;ferris wheel;t express
+Bunsik (snack bar) menu|tteokbokki;kimbap;sundae/blood sausage;twigim/fried snacks/tempura;ramen;fish cake/odeng;jjolmyeon/chewy noodles;dumplings/mandu
+Korean-Chinese restaurant menu|jajangmyeon/black bean noodles;jjamppong;tangsuyuk/sweet and sour pork;fried rice;fried dumplings/dumplings;ulmyeon;kkanpunggi/spicy garlic chicken;mapo tofu
+Japanese food|sushi;ramen;udon;tonkatsu/pork cutlet;gyudon/rice bowl/donburi;okonomiyaki;takoyaki;soba
+Bread you buy at a bakery|soboro/streusel bread;croissant;white bread/sliced bread;red bean bread/danpatbbang;cake;bagel;mocha bread;croquette/korokke
+Ice cream flavors|vanilla;chocolate/choco;strawberry;green tea/matcha;mint chocolate/mint choco/mint chip;cookies and cream;yogurt;mango
+Names of fruits|apple;banana;strawberry;grape/grapes;watermelon;tangerine/mandarin/clementine;pear/korean pear;peach
+Names of vegetables|onion;carrot;cucumber;napa cabbage/cabbage;potato;green onion/scallion;lettuce;chili pepper/pepper
+Names of flowers|rose;sunflower;tulip;cherry blossom;forsythia;azalea;rose of sharon/mugunghwa;chrysanthemum
+Names of trees|pine tree/pine;ginkgo tree/ginkgo;cherry tree/cherry blossom tree;maple tree/maple;oak tree/oak;bamboo;apple tree;zelkova
+Animals that live in the sea|whale;shark;octopus;fish;dolphin;squid;turtle/sea turtle;jellyfish
+Names of insects|butterfly;ant;mosquito;bee/honeybee;dragonfly;fly;cicada;grasshopper
+Names of birds|pigeon;sparrow;magpie;eagle;crow;parrot;chicken;penguin
+Names of colors|red;blue;yellow;green;black;white;purple;pink
+Things that are yellow|banana;chick;forsythia;lemon;sunflower;korean melon/chamoe;school bus/bus;corn
+Things that are green|tree/leaves/leaf;grass;frog;cucumber;watermelon;green light;broccoli;spinach
+Things that are blue|sky;sea/ocean;water;jeans;green light/go light;blueberry;smurf/smurfs;blue pen/pen
+Things that are white|snow;clouds/cloud;milk;paper;salt;sugar;rabbit/bunny;rice
+Things that are round|ball;coin;clock;sun;moon;wheel;plate;pizza
+Things that are hot|fire;sun;ramen;coffee;hot water/water;soup;lava;sauna/jjimjilbang
+Things that are cold|ice;ice cream;snow;fridge/refrigerator;cold water/water;winter;iced americano;bingsu/shaved ice
+Things that smell good|flowers/flower;perfume;bread;coffee;soap;fabric softener/laundry;meat/bbq;baby
+Things that are loud|construction/construction site;crying baby/baby;motorcycle;siren;alarm;cicada;thunder;upstairs neighbors/floor noise
+Small animals|hamster;ant;mouse/rat;squirrel;chick;hedgehog;rabbit/bunny;bird/sparrow
+Big animals|elephant;giraffe;whale;hippo/hippopotamus;bear;rhino/rhinoceros;dinosaur;horse
+Expensive things|house/apartment;car;luxury goods/designer bag;diamond/jewelry;gold;watch;land;airplane/plane
+Breakfast menu|rice;bread/toast;cereal;eggs/egg/fried egg;milk;kimbap;salad;coffee
+What people often eat for lunch|kimchi stew/kimchi jjigae;soybean paste stew/doenjang jjigae;spicy pork/jeyuk;gukbap;jajangmyeon;pork cutlet/donkatsu;ramen;bibimbap
+Food you eat while camping|pork belly/samgyeopsal/meat;ramen;barbecue/bbq;marshmallows/marshmallow;sausage/sausages;stew/kimchi stew;beer;potatoes/sweet potato
+What you do at a jjimjilbang|drink sikhye/sikhye;eat eggs/baked eggs;sweat/sauna;sleep;sheep head towel/towel hat;chat/talk;watch tv/tv;massage
+What you do in an elevator|look at phone/phone;watch floor numbers/floor numbers;look in the mirror/mirror;stand still/stay still;press buttons/button;greet/say hi;close the door;music
+What you do in the bathroom|look at phone/phone;wash hands;brush teeth;go/pee/poop;shower;makeup;look in the mirror/mirror;sing
+Things you need for an exam|pencil/mechanical pencil;eraser;computer pen/sign pen;id/admission ticket;watch;pen;calculator;water
+Things in an office|computer;desk;chair;printer;copier/copy machine;documents/papers;pen;coffee machine/coffee
+Things in a hospital|doctor;nurse;injection/shot/needle;bed;medicine;stethoscope;wheelchair;patient
+Things in a school bag|books/textbook/book;pencil case;notebook;phone;water/water bottle;wallet;earphones;snacks
+Things in a wallet|money/cash;card/credit card;id/id card;photo/picture;receipt/receipts;transit card;business card;coupon/coupons
+Things every room has|bed;desk;closet/wardrobe;chair;computer;blanket;mirror;tv
+Things in a kitchen|fridge/refrigerator;stove/gas stove;sink;microwave;knife;pot;bowl/dishes;rice cooker
+Things in a bathroom|toilet;sink;shower;towel;toothbrush;toothpaste;shampoo;mirror
+Things you think of with the sea|waves/wave;sand;swimming;shells/shell;seagull;fish;boat/ship;summer
+Things you think of with mountains|trees/tree;hiking;summit/peak;fresh air/air;rocks/rock;autumn leaves/fall foliage;spring water/mountain spring;makgeolli
+Famous places in Seoul|namsan tower/n seoul tower;gyeongbokgung/gyeongbok palace;han river;myeongdong;lotte world;gangnam;gwanghwamun;hongdae
+Things you think of with Busan|haeundae;sea/ocean/beach;gwangalli/gwangan bridge;pork soup/dwaeji gukbap;dialect/accent/satoori;jagalchi market/fish market;lotte giants/baseball;milmyeon/cold noodles
+Things you think of with Jeju|tangerine/mandarin;hallasan/mount halla;sea/ocean/beach;dol hareubang/stone grandfather;black pork;haenyeo/women divers;horse/horses;canola flowers/yellow flowers
+Food foreigners must try in Korea|kimchi;bulgogi;samgyeopsal/pork belly/korean bbq;bibimbap;fried chicken/chicken;tteokbokki;soju;ramen
+Popular overseas destinations for Koreans|japan/tokyo/osaka;vietnam/da nang;thailand/bangkok;guam;usa/america/united states;china;philippines/cebu;europe/paris
+What you do on rainy days|stay home;sleep/nap;watch movies/movie;eat pajeon/pancakes;listen to music/music;use an umbrella/umbrella;read/book;look out the window
+What you do on snowy days|build a snowman/snowman;snowball fight;take pictures/photos;sledding/sled;stay home;walk;shovel snow/clear snow;coffee
+Feeling when booking holiday train tickets|nervous/tense;anxious;excited;annoyed/irritated;happy;uneasy/worried;impatient;tired
+Things you buy with your first paycheck|gift for parents/parents gift;red underwear/long johns;clothes;phone;bag;watch;shoes;save/savings
+Common lies people tell|i'm fine/it's fine;almost there/i'm almost there;i'm full/full;i won't eat/not eating;i'm not sleepy;be right there/on my way;i don't know;i don't remember
+Video game genres|rpg;fps/shooter;role playing/role-playing;puzzle;sports;racing;strategy;rhythm
+Famous video games|league of legends/lol/league;minecraft;battlegrounds/pubg;overwatch;maplestory/maple story;fifa/fc online;starcraft;pokemon/pokemon go
+Videos people watch a lot on YouTube|mukbang/eating show;gaming/games;vlog/vlogs;music/music videos;variety shows/entertainment;cooking/recipes;workout/exercise;reviews/review
+Names of social media apps|instagram/insta;youtube;facebook;tiktok;kakaotalk/kakao;twitter/x;threads;band
+What people do most on their phones|kakaotalk/texting/messages;youtube;instagram/social media;games;calls/phone calls;search/google;photos/pictures;music
+Food often ordered on delivery apps|fried chicken/chicken;pizza;tteokbokki;jajangmyeon/chinese food;jokbal/bossam;hamburger/burger;coffee;sushi
+Diet foods|chicken breast;salad;sweet potato;eggs/egg;tofu;banana;cucumber;protein shake/protein
+Things you do for your health|exercise;drink water/water;sleep/good sleep;vitamins/supplements;walking/walk;quit smoking;quit drinking;eat vegetables/vegetables
+What you do with insomnia|turn off phone;warm milk/milk;meditation/meditate;listen to music/music;sleeping pills;read/book;exercise;count sheep
+Babies' first words|mama/mom/umma;dada/dad/appa;mamma/food;snack/kkakka;no;yes;bye bye/bye;woof/doggy
+Jobs kids want when they grow up|doctor;teacher;youtuber;police officer/police/cop;celebrity/idol/singer;athlete/soccer player;scientist;firefighter
+Jobs that make a lot of money|doctor;lawyer;business owner/ceo/entrepreneur;celebrity/actor;athlete;judge;accountant;developer/programmer/software engineer
+Things you think of with firefighters|fire;fire truck;water/hose;ladder;helmet;rescue;hero;siren
+Things you think of with police officers|police car;handcuffs;gun;thief/criminal;uniform;whistle;patrol;siren
+Things teachers often say|be quiet/quiet;homework;this will be on the test/test;stop talking;sit down/take your seat;any questions/questions;open your books;attendance/roll call
+Things you think of with the military|training;leave/vacation;gun;discharge;military uniform/uniform;army food/mess hall food;private/rank;letters/letter
+Things middle-aged men like|hiking;golf;drinking/alcohol/soju;fishing;news;trot;dad jokes;soccer/football
+Things you think of with grandma's house|food/home cooking;countryside/village;pocket money/allowance;love;dog/puppy;vegetable garden/garden;kimchi;blanket
+Most exciting moment when dating|confession/love confession;first kiss/kiss;holding hands;first date;texts/messages;eye contact;gift;hug
+What you do after a breakup|cry;drink/alcohol;sleep;meet friends/friends;quit social media/block them;exercise;cut hair/haircut;travel/trip
+What you do before bed|phone;brush teeth;wash face/wash up;set alarm/alarm;pray;read/book;stretch/stretching;drink water
+What you drink most in a day|water;coffee;milk;tea/green tea;juice;soda/coke;alcohol;sports drink
+Coffee brands|starbucks;ediya;twosome place/a twosome place;mega coffee;paik's coffee/paik's;coffee bean;compose coffee;paul bassett
+Fried chicken flavors|fried/original/crispy;yangnyeom/seasoned/sweet and spicy;soy sauce/soy garlic;half and half;green onion chicken/padak;garlic chicken/garlic;bburinkle/cheese powder;honey combo
+Ramen brands|shin ramyun/shin ramen;jin ramen;chapagetti;neoguri;ansungtangmyun/ansung;buldak/fire noodles/buldak bokkeummyeon;samyang ramen/samyang;yeul ramen
+Snack brands|shrimp crackers/saeukkang;pokachip/potato chips;honey butter chips;kokkalcorn/corn snack;choco pie;squid peanut;homerun ball;pepero
+Korean singers|bts;blackpink;iu;lim young-woong/lim youngwoong;newjeans;seventeen;bigbang/big bang;psy
+Traditional childhood games|tag;hide and seek;rubber band jump/jump rope;ddakji;jegichagi;gonggi/jacks;marbles;red light green light
+Korean folktales|heungbu and nolbu;the sun and the moon;kongjwi and patjwi;the tale of shim cheong/shim cheong;the tortoise and the hare;the fairy and the woodcutter;the old man with a lump;the tale of the rabbit's liver
+Things you buy in Myeongdong|cosmetics/makeup/skincare;clothes;street food;shoes;accessories;face masks/sheet masks;souvenirs;bags/bag
+What you do at a bank|deposit;withdraw/withdrawal;open an account/bankbook;loan;transfer/send money;exchange currency/currency exchange;get a card;take a number/queue ticket
+Things you always buy at the supermarket|milk;ramen/instant noodles;eggs/egg;fruit;meat;toilet paper/tissue;water;snacks
+Birthday gift for a girlfriend|flowers/bouquet;perfume;necklace;bag/handbag;ring;cake;makeup/cosmetics;letter/card
+Birthday gift for a boyfriend|wallet;perfume/cologne;watch;clothes;shoes/sneakers;cake;belt;letter/card
+Gifts for parents|money/cash/allowance;health supplements/red ginseng;flowers/carnations;clothes;trip/travel;massage chair/massager;bag;letter/card
+Things you think of with Monday|going to work/work commute;tired/tiredness;monday blues;school;meeting/meetings;annoyed/irritation;coffee;work
+What you do on Friday night|drink/alcohol;fried chicken/chicken;movie/netflix;meet friends/friends;games;stay up late;date;party
+Hardest part of working at a company|boss/manager;overtime/working late;going to work/mornings;office politics/coworkers/people;salary/pay;meetings;workload/work;commute
+Common interview questions|introduce yourself/self introduction;why did you apply/motivation;strengths;weaknesses;future goals/where do you see yourself;anything else to say/final words;experience/career;hobbies
+Things you eat with tteokbokki|sundae/blood sausage;twigim/fried snacks/tempura;kimbap;fish cake/odeng;ramen/rabokki;coolpis;cheese;dumplings/mandu
+Things you eat with pork belly|soju;lettuce/lettuce wraps/ssam;kimchi/grilled kimchi;garlic;soybean stew/doenjang jjigae;cold noodles/naengmyeon;ssamjang/dipping sauce;green onion salad/pajeori
+Key ramen ingredient besides water|egg;green onion/scallion;kimchi;soup powder/seasoning;cheese;timing/cooking time;pot;rice cake
+Kimbap fillings|pickled radish/danmuji;ham;egg;spinach;carrot;burdock root/burdock;imitation crab/crab stick;tuna
+What goes in bibimbap|gochujang/red pepper paste;egg/fried egg;namul/vegetables/bean sprouts;rice;sesame oil;meat/beef;carrot;spinach
+Types of kimchi|napa cabbage kimchi/cabbage kimchi;kkakdugi/radish kimchi;chonggak kimchi/ponytail radish kimchi;yeolmu kimchi/young radish kimchi;green onion kimchi/pa kimchi;mustard leaf kimchi;cucumber kimchi/oi sobagi;white kimchi/baek kimchi
+Types of stew|kimchi stew/kimchi jjigae;soybean paste stew/doenjang jjigae;army stew/budae jjigae;soft tofu stew/sundubu;cheonggukjang;pollack stew;gochujang stew;tuna stew
+Types of soup|seaweed soup/miyeokguk;soybean soup/doenjangguk;bean sprout soup;kimchi soup;dried pollack soup/bugeoguk;rice cake soup/tteokguk;beef radish soup;egg soup
+Types of Korean alcohol|soju;beer;makgeolli/rice wine;somaek/soju beer;chungha;bokbunja/raspberry wine;maehwasu/plum wine;dongdongju
+Drinking games|the game of death;bunny bunny;369/three six nine;up down;son byung-ho game/finger game;baskin robbins 31/31;apartment/apt;nunchi game
+Hangover food|haejangguk/hangover soup;bean sprout gukbap/bean sprout soup;ramen;sundae soup/sundaeguk;dried pollack soup;jjamppong;pork bone soup/ppyeo haejangguk;milk
+Convenience store ice creams|melona;world cone;samanco/fish ice cream;pig bar/dwaejibar;ppangppare;bibibig;gugu cone;screw bar
+Drink brand names|coke/coca cola/cola;cider/sprite/chilsung cider;pocari sweat/pocari;milkis;demisoda;fanta;sikhye;gatorade
+Types of rice cake (tteok)|songpyeon;garaetteok/rice cake sticks;injeolmi;baekseolgi;sirutteok;kkultteok/honey rice cake;jeolpyeon;chapssaltteok/mochi
+Types of jeon (pancakes)|kimchi pancake/kimchijeon;green onion pancake/pajeon/seafood pancake;donggeurangttaeng/meat patties;zucchini pancake;potato pancake;chive pancake;mung bean pancake/bindaetteok;beef jeon/yukjeon
+Types of side dishes|kimchi;rolled omelet/egg roll;stir-fried anchovies/anchovies;spinach namul/namul;fish cake stir-fry;bean sprout salad;soy braised beef/jangjorim;seaweed/gim/laver
+Salty Korean snacks|saeukkang/shrimp crackers;pokachip/potato chips;kokkalcorn;pringles;squid chips/ojingeojip;gamjakkang/potato sticks;onion rings;kkul kkwabaegi/honey twist
+Chocolate snacks|choco pie;pepero;kancho;choco songi/chocomushroom;mon cher;ghana chocolate/ghana;kicker;homerun ball
+Summer fruits|watermelon;korean melon/chamoe;peach;grapes;plum;melon;mango;blueberries/blueberry
+Winter fruits|tangerine/mandarin;strawberry;apple;pear;hallabong;persimmon;kiwi;yuja/yuzu/citron
+Spicy foods|buldak/fire noodles;tteokbokki;malatang/mala;chicken feet/dakbal;jjamppong;spicy octopus/nakji bokkeum;kimchi stew;spicy fish stew/maeuntang
+Trending desserts|tanghulu;dubai chewy cookie/dujjonku;macaron;croffle;yakgwa/honey cookie;salt bread;cream bread;yogurt ice cream/frozen yogurt
+Malatang ingredients|bunmoja/wide potato noodles;glass noodles/chinese glass noodles;wood ear mushroom/mushroom;beef/meat;bok choy;tofu skin/fuzhu;corn noodles;fish cake
+First section you visit at a buffet|sushi;meat/steak;salad;dessert;sashimi/raw fish;pasta;fried food/tempura;crab
+What you pack for a picnic|kimbap;fruit;drinks;snacks;picnic mat/mat;sandwiches/sandwich;inari sushi/yubu chobap;fried chicken/chicken
+Lunch box side dishes|rolled omelet/egg roll;sausages/sausage;pork cutlet/donkatsu;kimchi;anchovies;ham;spicy pork/jeyuk;bulgogi
+Bread for breakfast|toast;white bread/sliced bread;croissant;bagel;sandwich;dinner rolls/morning bread;salt bread;muffin
+Music genre for rainy days|ballad;jazz;indie;acoustic;lo-fi/lofi;r&b/rnb;classical;pop
+Things cats love|churu/cat treats;boxes/box;fish;catnip;toys/feather toy;sunlight/sunbathing;tuna;high places
+Things dogs love|walks/walk;treats/snacks;ball;owner;meat;toys;bones/bone;pets/belly rubs
+Animal sounds|woof/bark;meow;oink;moo;cock-a-doodle-doo;roar;tweet/chirp;ribbit/croak
+Farm animals|cow;pig;chicken;horse;sheep;goat;duck;dog
+Dinosaur names|tyrannosaurus/t-rex/t rex;triceratops;brachiosaurus;stegosaurus;velociraptor/raptor;pteranodon;ankylosaurus;spinosaurus
+What pandas eat|bamboo;bamboo leaves;bamboo shoots;apples/apple;carrots/carrot;fruit;grass;panda cake/wotou
+Animals that can fly|birds/bird;eagle;bat;butterfly;bee;dragonfly;pigeon;mosquito
+Animals that live underwater|fish;whale;shark;octopus;squid;jellyfish;turtle;seal
+Nocturnal animals|owl;bat;cat;raccoon;hedgehog;mosquito;firefly;mouse/rat
+Animals with stripes|zebra;tiger;chipmunk/squirrel;bee;raccoon;skunk;cat;snake
+Athlete names|son heung-min/son heungmin/sonny;kim yuna/yuna kim;park ji-sung;ryu hyun-jin;lee kang-in;an se-young;kim min-jae;ohtani
+Things you think of with soccer|son heung-min/sonny;world cup;ball;goal;messi;ronaldo;soccer field/stadium;referee
+Things you think of with baseball|home run;fried chicken/chicken;cheering;baseball stadium/ballpark;pitcher;bat;chimaek/chicken and beer;ryu hyun-jin
+Olympic sports|archery;swimming;soccer/football;taekwondo;track and field/athletics;badminton;fencing;gymnastics
+Exercises at the gym|treadmill/running;squats/squat;bench press;deadlift;cycling/bike;plank;pull-ups/pull up;dumbbells/dumbbell
+What you do at a park|walk;exercise;cycle/bike;picnic;walk the dog;jog/jogging;sit on a bench/rest;take pictures
+What you do at the Han River|eat fried chicken/chicken;eat ramen/ramen;bike/cycling;walk;lay out a mat/mat;picnic;see the night view/night view;busking
+Things at a playground|slide;swing/swings;seesaw;jungle gym;sand/sandbox;monkey bars/pull up bar;merry-go-round/roundabout;bench
+Things you need for camping|tent;sleeping bag;chair;burner/stove;lantern;cookware/camp pots;meat;cooler/ice box
+Things you hang on your bag|keychain/keyring;plushie/doll;keys;badge/pin;earphone case/airpods case;name tag;charm/amulet;bell
+Smartphone apps|kakaotalk/kakao;youtube;instagram;naver;baemin/baedal minjok;toss;coupang;karrot/danggeun market
+Things every computer has|keyboard;mouse;monitor;computer case/tower;internet;speakers;chrome;notepad
+Ways to save phone battery|lower brightness/brightness;airplane mode;power saving mode/battery saver;close apps;turn off wifi/wifi;turn off bluetooth/bluetooth;turn off vibration;dark mode
+What you do on a laptop|homework/assignments;internet/browse;watch movies/movies;documents/word processing;games;coding/programming;youtube;meetings/zoom
+Online shopping sites|coupang;naver shopping/naver;gmarket;11st/11 street;musinsa;aliexpress/ali;auction;temu
+Things that come out of a delivery box|bubble wrap;item/product;shipping label;receipt;tape;newspaper;freebie/free gift;manual/instructions
+Home appliances|fridge/refrigerator;washing machine/washer;tv/television;air conditioner/ac;microwave;vacuum/vacuum cleaner;rice cooker;fan/electric fan
+Things you use to clean|broom;mop/rag;vacuum/vacuum cleaner;wet wipes;dustpan;detergent/cleaner;rubber gloves;duster
+Most annoying part of deep cleaning|cleaning the bathroom/bathroom;cleaning windows/windows;dishes/washing dishes;laundry;mopping the floor/mopping;recycling/sorting trash;organizing the closet/closet;dust/dusting
+Things you think of with laundry|washing machine;detergent;drying rack;fabric softener;socks;folding laundry/folding;sunlight;dryer
+Things you need on rainy days|umbrella;raincoat;rain boots;towel;umbrella bag/umbrella cover;waterproof shoes;dehumidifier;newspaper
+Things you need in summer|air conditioner/ac;fan;sunscreen;hand fan/folding fan;mosquito repellent/bug spray;short sleeves/t-shirt;sunglasses;water
+Things you need in winter|padded jacket/puffer/padding;scarf;gloves;hand warmer/heat pack;heater;electric blanket/heated mat;beanie/winter hat;thermal underwear/long johns
+Things you think of with idols|concert;fans/fan;songs/music;dance/dancing;light stick/lightstick;good looks/handsome;stage;fan signing/fansign
+What you do at a concert|cheer;sing along/singalong;wave a light stick/light stick;take pictures;scream;dance;slogan/banner;buy merch/merchandise
+Snacks you buy at the movies|popcorn;coke/soda;nachos;dried squid/squid;hot dog;churros;drinks;butter squid
+Movie genres|action;romance;comedy;horror;sci-fi/sf;thriller;animation;fantasy
+Things in horror movies|ghosts/ghost;blood;zombies/zombie;screaming/scream;darkness/dark;killer/murderer;curse;haunted house
+Classic K-drama scenes|amnesia/memory loss;birth secret;chaebol/rich family;love triangle;car accident;slap;water splash/throwing water;terminal illness
+Webtoon genres|romance;action;fantasy;school;slice of life/daily life;thriller;martial arts/murim;comedy
+YouTuber content|mukbang;gaming;vlog;reviews/review;challenges/challenge;asmr;unboxing;makeup
+Favorite karaoke genres|ballad;dance;trot;hip hop;rock;idol/kpop;ost/soundtrack;indie
+Things you think of with old phones|flip phone;text messages/sms;ringback tone/coloring;ringtone;cyworld;antenna;texting credits/al;feature phone
+Numbers Koreans like|7;3;1;8;10;5;9;2
+Symbols of good luck|four-leaf clover/clover;7/lucky seven;pig;charm/amulet/talisman;rainbow;horseshoe;gold;shooting star
+Symbols of bad luck|4/four;black cat;13;broken mirror;crow;under a ladder/ladder;name in red/red ink;friday the 13th
+Good things to dream about|pig;poop;dragon;fire;ancestors;money;water;president
+Things you do when making a wish|blow out candles/candles;shooting star;toss a coin/coin;pray;put hands together;birthday;close your eyes;bow
+Exam superstitions|no seaweed soup/seaweed soup;eat taffy/yeot;sticky rice cake/chapssaltteok;fork;toilet paper/tissue;don't cut nails;red pen;don't wash hair
+Things students hate at school|exams/tests;homework;school lunch;monday;morning assembly;math;gym clothes/pe uniform;demerit points/penalty points
+Things you secretly do in class|doze/sleep;phone;doodle;pass notes/notes;eat/snack;daydream;study something else;webtoons
+Things you think of with university|mt/membership training/retreat;assignments/homework;exams;festival;clubs/club;grades/gpa;campus;course registration/class registration
+What you do when job hunting|cover letter/self introduction letter;toeic/english test;interview prep/interviews;certifications/certificates;internship/intern;resume/cv;study group;portfolio
+Feelings on your first day at work|nervous/tense;excited;jittery/shaky;worried;tired;expectation/hopeful;anxious;thrilled/hyped
+Things you hate hearing at work|overtime/work late;company dinner/hoesik;work on the weekend;do it again/redo;can we talk/a quick word;good job/keep it up;kids these days;by tomorrow
+What you do after work|exercise/gym;netflix/drama;eat dinner/dinner;sleep;drink/alcohol;games;shower;youtube
+Vacation spots|beach/sea;abroad/overseas;jeju/jeju island;mountains/valley;camping;busan;gangwon/gangwon-do;hotel staycation/hocance
+What you do at a hotel|swim/pool;breakfast buffet/breakfast;sleep;room service;sauna;netflix;bath;buffet
+What you do at the airport|check in;duty free shopping/duty free;check bags/baggage;immigration/passport control;eat;wait;exchange money/currency exchange;take photos
+Places you bring a passport|airport;abroad/overseas;embassy;bank;travel agency;district office/city hall;duty free shop/duty free;hotel
+Worries when traveling abroad|pickpockets/theft;language/english;money;food;flight/plane;losing your passport/lost passport;getting lost;weather
+Common English greetings|hi;hello;thank you/thanks;good morning;bye;how are you;sorry;nice to meet you
+Hard parts of Korean for foreigners|honorifics/formal speech;batchim/final consonants;pronunciation;particles;numbers;casual speech/banmal;dialects/satoori;spacing
+Korean dialects|busan/gyeongsang;jeolla;jeju;chungcheong;gangwon;daegu;gwangju;gyeonggi
+Korean traditional holidays|seollal/lunar new year;chuseok;dano;daeboreum/first full moon;hansik;dongji/winter solstice;chilseok;children's day
+Korean public holidays|lunar new year/seollal;chuseok;christmas;children's day;liberation day;independence movement day/march 1st;hangul day;memorial day
+Things on the Korean flag|taegeuk/yin yang/red and blue circle;trigrams/four trigrams;white background/white;red;blue;black;circle;flagpole
+People on Korean money|king sejong/sejong the great;shin saimdang;yi sun-sin/admiral yi;yi hwang/toegye;yi i/yulgok;kim gu;jeong yak-yong;jang yeong-sil
+Korean historical figures|king sejong/sejong the great;yi sun-sin/admiral yi;yu gwan-sun;kim gu;ahn jung-geun;king gwanggaeto/gwanggaeto the great;shin saimdang;jang yeong-sil
+Korean palaces|gyeongbokgung;changdeokgung;deoksugung;changgyeonggung;gyeonghuigung;jongmyo;unhyeongung;gyeongungung
+Seoul subway line colors|green/line 2;blue/line 1;orange/line 3;sky blue/light blue/line 4;purple/line 5;brown/line 6;olive/line 7;pink/line 8
+Things you hate on the subway|crowds/packed/crowded;smells/smell;loud people;manspreading;cutting in line;backpacks;heat/hot;delays
+What you do in a taxi|phone;tell the destination/destination;sleep;look out the window;talk to the driver;pay;music;seatbelt
+Things you think of with cars|driving;wheels/tires;gas/fuel;hyundai;driver's license/license;highway;parking;mercedes/benz
+What you do at a gas station|fill up/get gas;car wash;pay;bathroom;wet wipes;snacks;check tire pressure/air;tissues
+Highway rest stop food|walnut cookies/hodu gwaja;fish cake bar/hot bar;udon;sotteok sotteok/sausage rice cake skewer;baby potatoes/potatoes;coffee;ramen;tteokbokki
+What you do on a bus|phone;sleep;listen to music/music;look out the window;stand;tap transit card/card;press the stop button/stop bell;read/book
+Things you hate on rainy days|wet shoes/shoes;carrying an umbrella/umbrella;humidity;traffic jams/traffic;bad hair/messy hair;laundry won't dry/laundry;crowded subway;muddy puddles/puddles
+Things sold at the stationery store near school|cheap snacks/junk food;gacha/lucky draw;toys;school supplies;slime;pokemon cards/cards;eraser;stickers
+Things elementary school kids like|games;pokemon;youtube;snacks;playground;slime;ice cream;soccer
+Things you want to do as an adult|earn money/make money;travel;move out/independence;drive;get married;drink;stay up late;buy a house
+Things you need when living alone|fridge;rice cooker;washing machine;bed;microwave;vacuum;ramen;money
+Food people living alone often eat|ramen;convenience store lunch box/dosirak;delivery food/delivery;eggs/egg;kimchi fried rice/fried rice;instant rice/hetbahn;frozen food;cereal
+Ways to save money|budget/household budget;stop ordering delivery;drink less coffee;eat out less;savings account/installment savings;buy used/second-hand;public transportation/transit;coupons
+Things people buy second-hand|electronics/phone;clothes;furniture;books;bicycle/bike;game console;bags/bag;baby products/baby stuff
+Things often used as passwords|birthday;1234;phone number;0000;name;anniversary;1111;home address/address
+What you do when the alarm goes off|turn it off;go back to sleep/snooze;check phone;get annoyed/annoyed;get up/wake up;check the time;pull up the blanket;stretch
+Things you think of with sleep talking|mumbling;laughing;swearing/cursing;calling a name/names;teeth grinding;snoring;kicking;singing
+Things people procrastinate on|cleaning;homework/assignments;exercise;dieting/diet;studying/study;dishes;replying/texting back;going to the doctor/hospital
+New Year's resolutions|exercise/work out;diet/lose weight;quit smoking;study;save money;read more/reading;quit drinking;wake up early
+Things that come with age|wrinkles;gray hair/white hair;belly/beer belly;back pain;farsightedness/reading glasses;wisdom;grandchildren;forgetfulness
+What you do when happy|smile/laugh;dance;sing;scream/shout;jump;clap;hug;brag/show off
+What you do when angry|yell/scream;swear/curse;slam the door;cry;eat;sleep;exercise;go silent/silence
+What you do when sad|cry;listen to music;sleep;call a friend;eat;drink/alcohol;write in a journal/diary;walk
+What you do when nervous|bite nails/nail biting;bounce leg/shake leg;deep breaths/breathe;go to the bathroom;drink water;shaky hands;sweat/sweating;mumble
+What you do when bored|phone;youtube;sleep;games;snacks;doodle;space out/zone out;walk
+Things you ask when you first meet someone|name;age;where you live;job;mbti;hobbies;school;hometown
+MBTI types|infp;enfp;intj;istj;estj;infj;entp;isfj
+Perks of being a celebrity|money;popularity;fame;gifts;travel;sponsorships/free stuff;nice clothes;fans
+Things you'd want instead of a superpower|money;time;health;house;looks/good looks;luck;talent;love
+What you'd do if you won the lottery|buy a house;quit my job/quit;travel;gift for parents/parents;buy a car;donate/charity;save;buy a building
+When you'd go with a time machine|childhood;joseon dynasty;future;dinosaur age/dinosaurs;high school;yesterday;the day before the lottery;first love
+Things Koreans often say|hurry hurry/ppalli ppalli;did you eat;it's okay;daebak/awesome;really/jinjja;aigoo;thank you for your hard work;let's grab a meal sometime
+Moments when you shout "daebak"|winning the lottery;delicious food;passing an exam;seeing a celebrity;payday/salary;sale;gift;pretty clothes
+Things you often say at a restaurant|excuse me/over here/yeogiyo;imo/auntie;water please/water;check please/bill please/the check;enjoy your meal;more side dishes please/more banchan;to go please/takeout;menu please/menu
+Reasons friends fight|money;not keeping in touch/texting;being late/lateness;jealousy;misunderstanding;saying the wrong thing/slip of the tongue;dating/relationships;secrets
+Reasons couples fight|not texting/contact;jealousy;friends of the opposite sex/opposite sex friends;broken promises/plans;money;date plans/where to go;tone/attitude;anniversaries/forgetting anniversaries
+How couples pay for dates|split the bill/dutch pay/go dutch;take turns;the guy pays/man pays;shared date account/joint account;the girl pays/woman pays;whoever earns more;each pays their own;half and half/50 50
+Places to confess your feelings|cafe;park;han river;amusement park;movie theater;beach;in front of their house;restaurant
+Types of anniversaries|birthday;100 days/100th day;first anniversary/1 year;christmas;valentine's day;white day;pepero day;wedding anniversary
+What you do on Pepero Day|give pepero;get pepero/receive pepero;confess;write a letter/letter;go on a date/date;make pepero;give a gift/gift;take pictures
+Things you give on Valentine's Day|chocolate;letter/card;flowers;candy;gift/present;cake;cookies;perfume
+Wedding cash gift amount|50,000 won/50000/5만;100,000 won/100000/10만;30,000 won/30000/3만;70,000 won/70000;150,000 won/150000;200,000 won/200000;300,000 won/300000;1,000,000 won/1000000/one million
+Honeymoon destinations|bali;hawaii;maldives;cancun;europe;jeju;guam;thailand/phuket
+Things every newlywed home has|bed;fridge/refrigerator;washing machine;sofa/couch;tv;dining table;air conditioner;wedding photo
+Things you think of with babies|diapers/diaper;milk/formula;crying;cuteness/cute;baby bottle/bottle;stroller;toys;sleep
+Popular baby names|seojun;hayun;jiwoo;doyun;seoa;ijun/lee jun;hajun;jian
+Food moms make|kimchi stew;soybean paste stew;seaweed soup;rolled omelet/egg roll;kimbap;bulgogi;japchae;tteokbokki
+Things you think of with dads|work/office;dad jokes;fishing;sofa/couch;remote control/remote;drinking/alcohol;golf;news
+Reasons siblings fight|remote control/remote;snacks;clothes;room;computer;phone;toys;bathroom
+Games families play together|yut nori;go-stop/hwatu;board games;karaoke;watch movies;travel;card games;camping
+Family trip destinations|jeju;gangneung;busan;gyeongju;yeosu;japan;campsite/camping;sokcho
+Things at grandpa's house|tv/television;newspaper;janggi board/baduk board/go board;radio;photos/pictures;medicine;plants/flower pot;sofa
+Holiday nagging from relatives|when are you getting married;did you get a job;you lost weight/you gained weight;are you doing well in school;how much do you make/salary;are you dating anyone;which college are you going to;when are you having kids
+What you do after the holidays|sleep;diet;dishes;unpack/clean up;go back to work;rest;eat leftovers/leftovers;count gift money/allowance
+Gift you want on Children's Day|toys;game console;pocket money/allowance/money;lego;doll/plushie;phone;bicycle/bike;books/book
+What you do on Teacher's Day|write a letter/letter;carnations/carnation;gift;say thank you;sing a song/song;party;flowers;cake
+Parents' Day gifts|carnations/carnation;money/allowance;letter;health supplements;flowers;nice meal/dinner;clothes;cake
+Season Koreans like best|fall/autumn;spring;summer;winter;early summer;late fall/late autumn;spring days;early spring
+Things you think of with fall|autumn leaves/fall foliage/maple leaves;fallen leaves;reading;chuseok;clear sky/sky;cosmos flowers/cosmos;high sky fat horses;sweet potato
+Things you think of with spring|cherry blossoms/cherry blossom;forsythia;new semester/new school year;flowers;picnic;yellow dust/fine dust;azaleas/azalea;warmth/warm weather
+Things you think of with winter|snow;christmas;bungeoppang/fish bread;cold;snowman;padded jacket/puffer;skiing;tangerines
+What you do in monsoon season|carry an umbrella/umbrella;dehumidify/dehumidifier;worry about laundry;stay home;pajeon/pancakes;laundromat;rain boots;close the windows
+What you do on hot days|turn on the ac/air conditioner;ice cream;watermelon;shower;fan;swimming/water play;bingsu/shaved ice;short sleeves
+Food on cold days|fish cake/odeng;bungeoppang/fish bread;hotteok;gukbap;ramen;steamed bun/hoppang;roasted sweet potato;stew/jjigae
+What you do when sick|go to the doctor/hospital;take medicine;sleep;eat porridge/porridge;drink water;rest;take a sick day/day off;call mom
+Cold symptoms|cough;runny nose;fever;headache;sore throat;chills;sneezing;body aches
+Things you get at a hospital|injection/shot;prescription;checkup/examination;medicine;x-ray;blood test;receipt;doctor's note/medical certificate
+Things you think of with the dentist|drill sound/drill;cavity/cavities;fear/scary;scaling/teeth cleaning;anesthesia/numbing;toothpaste;floss;braces
+Things you buy at a pharmacy|cold medicine;headache pills/painkillers/tylenol;band-aids/bandages;pain patch/pas;digestive medicine/antacid;vitamins;ointment;masks/face mask
+What you do for a headache|take medicine/painkiller;sleep;drink water;rest;massage;walk;coffee;close your eyes
+What you take for a stomachache|digestive medicine/antacid;porridge;plum tea/maesil tea;water;medicine;yogurt;warm water;sports drink
+Foods that make you sleepy|milk;banana;rice/carbs;meat;cheese;honey;chamomile;lettuce
+Drinks when you're tired|coffee;energy drink/red bull/hot six;bacchus;water;vitamin drink;green tea;red ginseng;coke/cola
+Healthy foods|vegetables;fruit;nuts;fish;broccoli;garlic;brown rice;sweet potato
+Beauty routine steps|wash face/face wash;toner;lotion;sunscreen;sheet mask/face mask;moisturizer;essence/serum;cleansing/cleanser
+Types of makeup|lipstick;foundation;eyeshadow;mascara;sunscreen;cushion/cushion compact;lip balm;blush
+What you do at a hair salon|haircut/cut;dye/hair color;perm;shampoo;blow dry;scalp care;trim bangs/bangs;straightening/magic straight
+Hairstyles|bob/short bob;long hair;two block/undercut;ponytail;bangs;permed hair/perm;pixie cut/short cut;bun/top knot
+Things you say at a clothing store|can i try this on;do you have another size;how much is this;is there a discount;can i get a refund;i'll pay/check out;just looking;do you have another color
+Clothes every closet has|jeans;white t-shirt/white tee;hoodie;padded jacket/puffer;shirt/button-up;sweatshirt/crewneck;tracksuit/sweatpants;pajamas
+Types of shoes|sneakers/running shoes;dress shoes;slippers;sandals;boots;crocs;loafers;high heels/heels
+Types of accessories|ring;necklace;earrings;bracelet;watch;hat/cap;hair tie/scrunchie;sunglasses
+Handbag brands|chanel;louis vuitton/lv;gucci;hermes;prada;coach;dior;mcm
+Fashion brands|nike;adidas;uniqlo;zara;musinsa standard/musinsa;new balance;the north face/north face;h&m
+Car brands|hyundai;kia;mercedes/benz;bmw;tesla;genesis;audi;toyota
+Phone brands|samsung/galaxy;apple/iphone;lg;xiaomi;google/pixel;huawei;sony;motorola
+Convenience store chains|cu;gs25;7-eleven/seven eleven;emart24;ministop;homeplus 365;storyway;365 plus
+Big Korean companies|samsung;hyundai;lg;sk;lotte;hanwha;cj;posco
+Fried chicken brands|bbq;kyochon;bhc;goobne;nene chicken/nene;cheogajip;puradak;hosigi
+Pizza brands|domino's/dominos;pizza hut;mr. pizza/mr pizza;papa john's/papa johns;pizza alvolo;youth pizza;pizza school;banolim pizza
+Burger brands|mcdonald's/mcdonalds;burger king;lotteria;mom's touch/moms touch;kfc;shake shack;no brand burger;frank burger
+Ice cream and dessert shops|baskin robbins;sulbing;natuur;haagen-dazs/haagen dazs;yoajung;dippin dots;think;ben & jerry's/ben and jerrys
+Popular Baskin Robbins flavors|mom is an alien/puss in boots;almond bonbon;mint chocolate chip/mint choco;new york cheesecake;cherries jubilee;love me strawberry/strawberry;gone with the wind;shooting star
+Bank names|kb kookmin/kookmin bank;shinhan bank/shinhan;woori bank/woori;hana bank/hana;kakao bank;toss bank;nonghyup/nh;ibk/industrial bank
+University names|seoul national university/snu;yonsei;korea university;kaist;sungkyunkwan/skku;hanyang;postech;ewha
+Korean TV variety shows|infinite challenge;running man;i live alone;2 days 1 night;hangout with yoo;knowing bros/ask us anything;you quiz on the block;new journey to the west
+Famous Korean movies|parasite;train to busan;oldboy;the host;the admiral/roaring currents;extreme job;along with the gods;the roundup/crime city
+Famous Korean dramas|squid game;goblin/guardian;crash landing on you;descendants of the sun;the glory;reply 1988;extraordinary attorney woo;queen of tears
+Cartoon characters|pororo;crayon shin-chan/shin-chan;doraemon;pikachu;dooly;conan/detective conan;spongebob;mickey mouse
+Kids' TV characters|pororo;pinkfong;tayo;robocar poli;baby shark;lightning man;teletubbies;bboong bboong
+Video game characters|mario;pikachu;sonic;kirby;zelda/link;pac-man/pacman;luigi;teemo
+Board games|blue marble/monopoly korea;rummikub;halli galli;jenga;chess;omok/gomoku/five in a row;monopoly;da vinci code
+Card games|go-stop/hwatu;poker;one card/uno style;old maid;hula;blackjack;uno;solitaire
+Games played at PC bangs|league of legends/lol;battlegrounds/pubg;overwatch;fifa/fc online;valorant;sudden attack;maplestory;starcraft
+Food at PC bangs|ramen;cup noodles;fried rice;drinks;snacks;hot dog;tteokbokki;chapagetti
+Arcade games|pump it up/dance game;tekken;claw machine/crane game;basketball;whack-a-mole;karaoke;taiko drum master/taiko;racing
+Prizes you want from a claw machine|teddy bear;pikachu;sanrio/kuromi;shin-chan;kakao friends/ryan;snoopy;rilakkuma;molang
+Character brands|kakao friends;line friends;sanrio;disney;pokemon;shin-chan;snoopy;miffy
+Kakao Friends characters|ryan;apeach;muzi;choonsik;frodo;neo;tube;jay-g
+Sanrio characters|hello kitty;kuromi;my melody;cinnamoroll;pompompurin;pochacco;keroppi;little twin stars
+Disney characters|mickey mouse;elsa;minnie mouse;donald duck;winnie the pooh/pooh;stitch;rapunzel;cinderella
+Fairy tale princesses|cinderella;snow white;sleeping beauty/aurora;the little mermaid/ariel;rapunzel;elsa;belle;jasmine
+Superhero names|iron man;spider-man/spiderman;superman;batman;captain america;hulk;thor;wonder woman
+Types of ghosts|virgin ghost/maiden ghost;dokkaebi/goblin;zombie;gumiho/nine-tailed fox;grim reaper;dracula/vampire;egg ghost/faceless ghost;bachelor ghost
+Scary places|abandoned house/haunted house;hospital;school at night;bathroom;cemetery/graveyard;basement;tunnel;mountain/woods
+Things you think of with amusement parks|roller coaster;parade;cotton candy;waiting in line/lines;school uniforms;carousel;churros;headbands
+Zoo snack bar food|hot dog;cotton candy;ice cream;popcorn;drinks;churros;tteokbokki;kimbap
+Animals at an aquarium|shark;jellyfish;penguin;seal;stingray/ray;turtle;tropical fish;beluga
+Things you think of with campus|library;lawn/grass;festival;lecture hall/classroom;clubs;cherry blossoms;cafeteria food/school cafeteria;assignments
+What you do at the library|study;read;borrow books;sleep;homework/assignments;stay quiet/be quiet;save a seat;laptop
+Books you borrow from the library|novels/novel/fiction;comics/manga;self-help books/self-help;essays;poetry/poems;workbooks/practice books;history books;science books
+Book genres|novel/fiction;essay;self-help;comics/manga;mystery/detective;fantasy;poetry;history
+Writing tools|pen/ballpoint pen;pencil;mechanical pencil;keyboard;fountain pen;highlighter;colored pencils;brush/calligraphy brush
+Things in a pencil case|pen;pencil;eraser;mechanical pencil;highlighter;ruler;correction tape/white out;scissors
+Things you buy at a stationery store|notebook;pen;eraser;stickers;post-it notes/sticky notes;glue;scissors;colored paper/origami paper
+Things used in art class|paint/paints;brush/paintbrush;crayons/crayon;colored pencils;sketchbook;clay;scissors;glue
+Things you do in music class|sing;recorder;xylophone;piano;danso/korean flute;tambourine;read sheet music;clap
+Sports in PE class|dodgeball;soccer;basketball;running/race;jump rope/skipping rope;volleyball;kickball;gymnastics/calisthenics
+School sports day events|relay race/relay;tug of war;ball toss/break the gourd;obstacle course;three-legged race;ball rolling/giant ball;cheering contest/cheer;horseback fight/cavalry battle
+Things you learn in math class|addition/adding;multiplication/times tables;fractions;equations;shapes/geometry;calculus;probability;functions
+Science class experiments|microscope;volcano experiment/volcano;litmus paper;magnets/magnet;electric circuit/circuit;alcohol lamp/bunsen burner;dissection;growing plants
+Words on an English vocab test|apple;banana;school;friend;family;book;love;water
+Biggest countries in the world|russia;canada;usa/america/united states;china;brazil;australia;india;argentina
+Countries you want to visit|japan;usa/america;france;switzerland;uk/england/britain;italy;australia;spain
+Famous landmarks|eiffel tower;statue of liberty;pyramids/pyramid;great wall/great wall of china;namsan tower/n seoul tower;big ben;colosseum;sydney opera house/opera house
+Capital cities|seoul;tokyo;washington/washington dc/dc;paris;beijing;london;rome;pyongyang
+World foods|pizza;sushi;hamburger/burger;pasta;pho/rice noodles;tacos/taco;curry;dim sum
+Korean things famous worldwide|kimchi;bts;samsung;squid game;bibimbap;kpop/k-pop;taekwondo;hanbok
+Foreign foods Koreans love|pizza;pasta;sushi;pho;hamburger/burger;malatang;tacos;curry
+Things you think of with Thailand|tom yum/tom yum goong;elephant;thai massage/massage;bangkok;pad thai;heat/hot weather;buddhism/temples;mango
+Things you think of with Japan|sushi;tokyo;anime/animation;cherry blossoms;ramen;hot springs/onsen;mount fuji/fuji;kimono
+Things you think of with America|hamburger/burger;statue of liberty;new york;english;hollywood;guns/gun;american flag/stars and stripes;president
+Things you think of with China|great wall;panda;chinese food/jajangmyeon;beijing;malatang;chinese characters/hanja;crowds/lots of people;kung fu
+Things you think of with France|eiffel tower;paris;baguette;wine;fashion;croissant;louvre;perfume
+Things you think of with space|stars/star;moon;spaceship/rocket;aliens/alien;planets/planet;earth;black hole;astronaut
+Planets in the solar system|earth;mars;jupiter;saturn;venus;mercury;uranus;neptune
+Types of weather|sunny/clear;rain/rainy;snow/snowy;cloudy;wind/windy;typhoon/hurricane;fog/foggy;thunderstorm/lightning
+Natural disasters|earthquake;typhoon/hurricane;flood;wildfire/forest fire;drought;tsunami;blizzard/heavy snow;volcanic eruption/volcano
+Ways to put out a fire|fire extinguisher;water;call 119/call 911/call the fire department;sand;blanket;fire truck;sprinkler;blow it out
+Emergency phone numbers|112;119;120;114;1330;110;182;117`.split('\n').map(l=>{const[q,a]=l.split('|');return{q,a:a.split(';').map(s=>s.split('/'))}});
+BANK.forEach((b,i)=>{const e=EN[i];if(e){b.en=e.q;b.ea=e.a}});
+let lang=(()=>{try{return localStorage.getItem('dd-lang')==='en'?'en':'ko'}catch(e){return'ko'}})();
+const tx=(k,e)=>lang==='en'?e:k;
+const qtext=p=>lang==='en'&&p.en?p.en:p.q;
+const ZEN=["Forest floor", "Understory", "Canopy", "Valley", "Low clouds", "Mountains", "Storm", "Death zone", "Cruising altitude", "Jet stream", "Stratosphere", "Stratopause", "Mesosphere", "Noctilucent clouds", "Mesopause", "Kármán line", "Aurora", "Low Earth orbit", "Van Allen belts", "Geostationary orbit", "The Moon", "Inner planets", "The Sun", "Outer planets", "Oort cloud", "Nearby stars", "Milky Way", "Cosmic web"];
+const MKEN=["Hyperion, the tallest tree on Earth", "Lotte World Tower", "Burj Khalifa, the tallest building", "Where cumulus clouds begin", "Summit of Hallasan", "Summit of Mont Blanc", "Thunderclouds can tower this high", "Summit of Everest", "Airliner cruising altitude", "Jet stream: winds over 200 km/h", "Concorde cruising altitude (retired 2003)", "Baumgartner's jump, 2012", "Where most meteors burn up", "Noctilucent clouds, the highest clouds", "Kármán line: space begins here", "Where auroras glow", "International Space Station", "Hubble Space Telescope", "GPS satellites", "Geostationary orbit: home of the Chollian satellite", "Average distance to the Moon", "James Webb Space Telescope (L2)", "Mars at its closest", "1 AU: Earth to the Sun", "Jupiter at its closest", "Voyager 1, 2026", "Proxima Centauri, the nearest star", "Sirius, the brightest star in the night sky", "Sagittarius A*, the Milky Way's black hole", "Andromeda Galaxy"];
+const TEN={sky:'Sky High',jet:'Jet Stream',cloud:'Cloud Nine',kite:'Kite',tree:'Treetop',ground:'Grounded',miss:'Off target'};
+const TDE={sky:'The #1 answer',jet:'Ranked 2–4',cloud:'Ranked 5–8',kite:'Off the board, but a few said it',tree:'Hardly anyone said it',ground:'Only you said it',miss:"Doesn't fit the question"};
+const MDE={daily:'The same 7 questions for everyone. Resets at midnight Korea time; one try per day.',classic:'7 random questions, 25 seconds each. A perfect climb is 700 points and 14 km.',endless:'Start with 3 balloons. Passing or running out of time pops one, and a Sky High answer brings one back. Climb as far as you can.'};
+const tn=k=>tx(T[k][0],TEN[k]);
+const zname=i=>tx(Z[i][0],ZEN[i]);
+const ord=n=>n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th');
+
 
 const T={sky:['하늘 끝',100,'#ffd166','1위 답'],jet:['제트기류',64,'#ff5d8f','2–4위'],cloud:['구름 위',32,'#ff9f43','5–8위'],kite:['연날리기',16,'#7cf07a','순위 밖, 몇몇이 쓴 답'],tree:['나무 꼭대기',8,'#4de3ff','거의 아무도 안 쓴 답'],ground:['땅바닥',4,'#93a7c9','나만 쓴 답'],miss:['엉뚱한 답',0,'#5b6f8f','질문에 안 맞는 답']};
 const SQ={sky:'🟨',jet:'🟥',cloud:'🟧',kite:'🟩',tree:'🟦',ground:'🟦',miss:'⬛'};
@@ -621,8 +1036,8 @@ function altToS(a){for(const z of Z){if(a<=z[4]){const t=z[3]===0?a/z[4]:Math.lo
 function sToAlt(S){for(const z of Z){if(S<=z[2]){const t=Math.max(0,(S-z[1])/(z[2]-z[1]));return z[3]===0?t*z[4]:z[3]*Math.pow(z[4]/z[3],t)}}return Z[Z.length-1][4]}
 const scoreAlt=s=>s<=700?20*s:14000*Math.exp((s-700)/260);
 const zAt=S=>{for(let i=0;i<Z.length;i++)if(S<Z[i][2])return i;return Z.length-1};
-MK.forEach(m=>m.push(altToS(m[0])));
-function fmtAlt(m){if(m<1000)return Math.round(m)+' m';const km=m/1000;if(km<100)return km.toFixed(2)+' km';if(km<1e4)return Math.round(km).toLocaleString('ko-KR')+' km';const ly=m/9.4607e15;if(ly>=.1)return(ly<1000?ly.toFixed(1):Math.round(ly).toLocaleString('ko-KR'))+' 광년';if(km<1e8)return(km/1e4).toFixed(1)+'만 km';return(km/1e8).toFixed(1)+'억 km'}
+MK.forEach(m=>m.push(altToS(m[0])));MK.forEach((m,i)=>m[3]=MKEN[i]);
+function fmtAlt(m){if(m<1000)return Math.round(m)+' m';const km=m/1000;if(km<100)return km.toFixed(2)+' km';const loc=lang==='en'?'en-US':'ko-KR';if(km<1e4)return Math.round(km).toLocaleString(loc)+' km';const ly=m/9.4607e15;if(ly>=.1)return(ly<1000?ly.toFixed(1):Math.round(ly).toLocaleString(loc))+tx(' 광년',' light-years');if(lang==='en')return km<1e9?(km/1e6).toFixed(1)+' million km':(km/1e9).toFixed(1)+' billion km';if(km<1e8)return(km/1e4).toFixed(1)+'만 km';return(km/1e8).toFixed(1)+'억 km'}
 
 /* ---------- sprites (original pixel art) ---------- */
 const KR=["............kk.k..","......kkkkkk..k...","....kkhhhhhhkk....","k..kphhhhhhhpexk..","kkkpppppppppppppk.","kdkdpppppppppppk..","k.kddpdpdpdpddk..."];
@@ -764,7 +1179,7 @@ function drawFauna(now){
 /* DOM overlays */
 const mkPool=[],nmPool=new Map();
 function overlays(){
- let n=0;for(const m of MK){const y=sy(m[2]);if(y<0||y>H)continue;let d=mkPool[n];if(!d){d=document.createElement('div');d.className='mk';d.appendChild(document.createElement('span'));$('marks').appendChild(d);mkPool.push(d)}d.style.display='';d.style.top=(y*P|0)+'px';d.firstChild.textContent=fmtAlt(m[0])+' · '+m[1];n++}
+ let n=0;for(const m of MK){const y=sy(m[2]);if(y<0||y>H)continue;let d=mkPool[n];if(!d){d=document.createElement('div');d.className='mk';d.appendChild(document.createElement('span'));$('marks').appendChild(d);mkPool.push(d)}d.style.display='';d.style.top=(y*P|0)+'px';d.firstChild.textContent=fmtAlt(m[0])+' · '+tx(m[1],m[3]);n++}
  for(let i=n;i<mkPool.length;i++)mkPool[i].style.display='none';
 }
 function nameTag(id,text,x,y,isMe){let d=nmPool.get(id);if(!d){d=document.createElement('div');d.className='nm'+(isMe?' me':'');$('names').appendChild(d);nmPool.set(id,d)}d.textContent=text;d.style.left=(x*P|0)+'px';d.style.top=(y*P|0)+'px';d.style.display='';d.dataset.seen=1}
@@ -775,7 +1190,7 @@ function drawBar(ct){
  if(['home','help','mpl'].includes(curScreen)){barEl.style.display='none';return}
  const top=Math.round(($('sc').getBoundingClientRect().bottom||90)-vp.getBoundingClientRect().top+14),bot=Math.max(top+80,ct-14),h=bot-top;
  barEl.style.display='block';barEl.style.top=top+'px';barEl.style.height=h+'px';
- const list=[{id:'me',label:MP.on?'나':'',S:me.S,T:me.to,c:me.pal[0],me:1}];
+ const list=[{id:'me',label:MP.on?tx('나','Me'):'',S:me.S,T:me.to,c:me.pal[0],me:1}];
  others.forEach((o,id)=>list.push({id,label:o.label||'',S:o.S,T:o.to,c:o.pal[0]}));
  const mx=Math.max(7000,...list.map(x=>Math.max(x.S,x.T)))*1.06;
  barPool.forEach(d=>d.dataset.seen='');
@@ -798,11 +1213,11 @@ function frame(now){
  const zi=zAt(camS);particles(Z[zi][11],spd,now);
  nmPool.forEach(d=>d.dataset.seen='');
  let i=0;others.forEach((o,id)=>{const off=[-30,30,-56,56,-80,80][i%6]*(1+Math.floor(i/6)*.15);i++;const x=W/2+off,y=sy(o.S);if(y<-40||y>H+20)return;drawKrill(x,y,o,now);nameTag(id,o.label,x,y+1,false)});
- drawKrill(W/2,KY,me,now);if(MP.on)nameTag('me','나',W/2,KY+1,true);
+ drawKrill(W/2,KY,me,now);if(MP.on)nameTag('me',tx('나','Me'),W/2,KY+1,true);
  nmPool.forEach(d=>{if(!d.dataset.seen)d.style.display='none'});
  overlays();
  const tg=$('tag');tg.style.left=(W/2*P)+'px';tg.style.top=((KY-44)*P)+'px';
- $('km').textContent=fmtAlt(sToAlt(camS));$('zn').textContent=Z[zi][0];
+ $('km').textContent=fmtAlt(sToAlt(camS));$('zn').textContent=zname(zi);
 }
 requestAnimationFrame(frame);
 /* keep the panel above the on-screen keyboard */
@@ -816,9 +1231,49 @@ const addF=n=>{LS.set('dd-feathers',fth()+n);showF()};
 const kstDate=()=>new Date(Date.now()+9*3600e3).toISOString().slice(0,10);
 function rng(seed){let h=1779033703;for(const c of seed)h=Math.imul(h^c.charCodeAt(0),3432918353);return()=>{h=Math.imul(h^h>>>16,2246822507);h=Math.imul(h^h>>>13,3266489909);return((h^=h>>>16)>>>0)/4294967296}}
 function shuffle(arr,r=Math.random){const a=arr.map((_,i)=>i);for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function match(p,input){const n=norm(input);if(!n)return -1;for(let i=0;i<p.a.length;i++)if(p.a[i].some(a=>norm(a)===n))return i;let best=-1,bl=0;p.a.forEach((al,i)=>al.forEach(a=>{const m=norm(a);if(m.length>=2&&n.includes(m)&&m.length>bl){best=i;bl=m.length}}));if(best>=0)return best;if(n.length>=2)for(let i=0;i<p.a.length;i++)if(p.a[i].some(a=>norm(a).includes(n)))return i;return -1}
+
+/*MATCH-START*/
+const HB=0xAC00,CHO='ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ',JUNG='ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ',JONG=['','ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ','ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+const jamo=s=>{let o='';for(const ch of s){const c=ch.charCodeAt(0)-HB;o+=c>=0&&c<11172?CHO[c/588|0]+JUNG[(c%588)/28|0]+JONG[c%28]:ch}return o};
+function dist(a,b,max){const n=a.length,m=b.length;if(Math.abs(n-m)>max)return max+1;let p2=null,p1=[];for(let j=0;j<=m;j++)p1[j]=j;
+ for(let i=1;i<=n;i++){const c=[i];let lo=i;for(let j=1;j<=m;j++){let v=Math.min(p1[j]+1,c[j-1]+1,p1[j-1]+(a[i-1]===b[j-1]?0:1));if(p2&&i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1])v=Math.min(v,p2[j-2]+1);c[j]=v;if(v<lo)lo=v}if(lo>max)return max+1;p2=p1;p1=c}return p1[m]}
+const STOP=new Set(['a','an','the','my','your','some','of','for','with','our']);
+const stem=w=>w.length>4&&w.endsWith('ies')?w.slice(0,-3)+'y':w.length>4&&/(s|x|z|ch|sh)es$/.test(w)?w.slice(0,-2):w.length>3&&w.endsWith('s')&&!/(ss|us|is)$/.test(w)?w.slice(0,-1):w;
+const toksOf=s=>String(s).toLowerCase().normalize('NFC').replace(/&/g,' and ').replace(/[’']/g,'').split(/[^0-9a-z가-힣ㄱ-ㅎㅏ-ㅣ]+/).filter(w=>w&&!STOP.has(w)).map(w=>/^[a-z]+$/.test(w)?stem(w):w);
+const keyOf=s=>toksOf(s).join('');
+const KSUF=['입니다','이에요','예요','이요','요','이랑','랑','하기','하는거','하는것','할때','이다','을','를','은','는','이','가','도'];
+function variants(s){const k=keyOf(s),out=new Set([k]);if(/[가-힣]$/.test(k))for(const f of KSUF)if(k.length>f.length+1&&k.endsWith(f))out.add(k.slice(0,-f.length));return[...out].filter(Boolean)}
+const isKo=s=>/[가-힣ㄱ-ㅎ]/.test(s);
+const syl=s=>(s.match(/[가-힣]/g)||[]).length;
+const tol=s=>{if(isKo(s)){const n=syl(s);return n<=2?0:n<=4?1:n<=7?2:3}const L=s.length;return L<4?0:L<9?1:L<13?2:3};
+const tokCache=new Map();const atoks=a=>{let t=tokCache.get(a);if(!t){t=toksOf(a);tokCache.set(a,t)}return t};
+const hasRun=(hay,nd)=>{if(!nd.length||nd.length>hay.length)return false;for(let i=0;i+nd.length<=hay.length;i++){let ok=true;for(let j=0;j<nd.length;j++)if(hay[i+j]!==nd[j]){ok=false;break}if(ok)return true}return false};
+const GEN=new Set(['latte','shop','mall','theater','theatre','store','park','tree','ride','place','center','centre','room']);
+function shortOK(x,y){if(x.length===y.length){let d=[];for(let i=0;i<x.length;i++)if(x[i]!==y[i])d.push(i);return d.length===2&&d[1]===d[0]+1&&x[d[0]]===y[d[1]]&&x[d[1]]===y[d[0]]}
+ const L=x.length>y.length?x:y,S=x.length>y.length?y:x;if(L.length-S.length!==1)return false;let i=0;while(i<S.length&&L[i]===S[i])i++;if(L.slice(i+1)!==S.slice(i))return false;return L[i]===L[i-1]||L[i]===L[i+1]||(i===L.length-1&&L[i]==='e')}
+const akCache=new WeakMap();
+function aliasKeys(p){let c=akCache.get(p);if(!c){c=p.a.map((al,i)=>{const raw=al.concat(p.ea&&p.ea[i]?p.ea[i]:[]);const seen=new Set(),out=[];raw.forEach(r=>{const k=keyOf(r);if(k&&!seen.has(k)){seen.add(k);out.push({k,t:toksOf(r)})}});return out});akCache.set(p,c)}return c}
+function match(p,input){
+ const vs=variants(input);if(!vs.length)return -1;const keys=aliasKeys(p),it=toksOf(input);
+ for(let i=0;i<keys.length;i++)if(keys[i].some(a=>vs.includes(a.k)))return i;
+ let best=-1,bl=0;
+ keys.forEach((ks,i)=>ks.forEach(a=>{const ok=isKo(a.k)?(a.k.length>=2&&vs.some(v=>v.includes(a.k))):hasRun(it,a.t);if(ok&&a.k.length>bl){best=i;bl=a.k.length}}));
+ let bd=99,bi=-1,tie=false,bal=0;
+ for(const v of vs){const t=tol(v);if(!t)continue;const ko=isKo(v),vj=ko?jamo(v):v;
+  keys.forEach((ks,i)=>ks.forEach(({k:a})=>{if(isKo(a)!==ko)return;const ta=Math.min(t,tol(a));if(!ta)return;
+   if(ko){if(a[0]!==v[0])return}else{if(a[0]!==v[0])return;if(Math.min(v.length,a.length)<7&&!shortOK(v,a))return}
+   const d=dist(vj,ko?jamo(a):a,ta);if(d>ta)return;if(d<bd){bd=d;bi=i;tie=false;bal=a.length}else if(d===bd&&bi!==i)tie=true}))}
+ const fz=bi>=0&&!tie?bi:-1;
+ if(best>=0)return fz>=0&&fz!==best&&bal>bl+2?fz:best;
+ for(const v of vs){const ko=isKo(v);if(ko?syl(v)<3:v.length<4)continue;let hit=-1,amb=false;
+  keys.forEach((ks,i)=>{if(ks.some(({k:a,t:at})=>ko?(a.includes(v)&&v.length/a.length>=.6):(it.length&&at.length===it.length+1&&GEN.has(at[at.length-1])&&it.every((w,j)=>at[j]===w)))){if(hit>=0&&hit!==i)amb=true;else if(hit<0)hit=i}});
+  if(hit>=0&&!amb)return hit}
+ return fz}
+function junk(s){const k=keyOf(s);return !k||(/^[a-z]+$/.test(k)&&!/[aeiouy]/.test(k))||/^[ㄱ-ㅎㅏ-ㅣ]+$/.test(k)||/^(.)\1+$/.test(k)||!/[가-힣a-z0-9]/.test(k)}
+/*MATCH-END*/
+
 const tierOf=r=>r===0?'sky':r<4?'jet':'cloud';
-let sample=null;const noAI=()=>{$('ainote').textContent='순위표에 없는 답은 ‘나무 꼭대기’(8점)로 처리돼요.'};
+let sample=null;function setAiNote(){$('ainote').textContent=sample?tx('순위표에 없는 답은 Claude가 의미가 같은지, 질문에 맞는지 확인해요. 오타나 비슷한 말, 영어 답도 알아봐요.','Answers not on the list are checked by Claude: synonyms, typos and Korean or English answers still count.'):tx('오타, 띄어쓰기, 비슷한 표현, 영어 답도 알아봐요. 순위표에 없는 답은 ‘나무 꼭대기’(8점)예요.','Typos, spacing, plurals and English or Korean answers all count. Answers not on the list get Treetop (8 points).')}const noAI=()=>setAiNote();
 let room=null;noAI();
 function makeRoom(cfg){
  if(!window.supabase||!cfg||!cfg.supabaseUrl||!cfg.supabaseKey)return null;
@@ -849,12 +1304,15 @@ function makeRoom(cfg){
 }
 try{room=makeRoom(window.DD_CONFIG)}catch(e){room=null}
 setTimeout(()=>{if(room)initLobby();else mpOff()},0);
-async function judge(p,ans){if(!sample)return'tree';
- const prompt=`당신은 한국 서베이 게임의 채점관입니다. 한국 사람 100명에게 질문했을 때를 생각하세요.\n질문: "${p.q}"\n참가자의 답: "${ans}"\n이 답이 질문에 말이 되는 답인지(valid), 100명 중 대략 몇 명이 이 답을 할지(per100, 0~30 숫자) 추정하세요. 장난, 무의미한 글자, 질문과 무관한 답은 valid=false.\nJSON만 출력: {"valid":true,"per100":5}`;
- try{let v=await sample.json(prompt,{modelTier:'quick'});if(typeof v==='string')v=JSON.parse(v);if(!v||!v.valid)return'miss';const c=+v.per100||0;return c>=8?'cloud':c>=3?'kite':c>=1?'tree':'ground'}
- catch(e){if(e&&e.code==='not_granted')sample=null;return'tree'}}
+async function judge(p,ans){
+ if(junk(ans))return{t:'miss',r:-1};
+ if(!sample)return{t:'tree',r:-1};
+ const list=p.a.map((al,i)=>`${i+1}. ${al[0]}${p.ea?' ('+p.ea[i][0]+')':''}`).join('\n');
+ const prompt=`You judge a Korean "survey says" party game. Players type the answer they think most people would give.\nQuestion: "${p.q}"${p.en?` (English: "${p.en}")`:''}\nRanked survey answers:\n${list}\nPlayer's answer: "${ans}"\nDecide:\n- match: the number of the ranked answer the player's answer clearly means: the same thing, a synonym, a translation (Korean or English), a typo or spelling variant, or a slightly more specific or general wording most people would accept as the same answer. Use 0 if it is a genuinely different answer. Be strict: related but different things are NOT a match (a pencil is not a pen, beer is not soju, a cat is not a tiger).\n- valid: whether the answer is a sensible response to the question at all (nonsense, jokes or unrelated words are not valid).\n- per100: if match is 0 and valid, roughly how many of 100 Korean people would give this answer (0-30).\nReply with JSON only, like {"match":0,"valid":true,"per100":3}`;
+ try{let v=await sample.json(prompt,{modelTier:'quick'});if(typeof v==='string')v=JSON.parse(v);if(!v)return{t:'tree',r:-1};const m=Math.round(+v.match||0);if(m>=1&&m<=p.a.length)return{t:tierOf(m-1),r:m-1};if(!v.valid)return{t:'miss',r:-1};const c=+v.per100||0;return{t:c>=8?'cloud':c>=3?'kite':c>=1?'tree':'ground',r:-1}}
+ catch(e){if(e&&e.code==='not_granted')sample=null;return{t:'tree',r:-1}}}
 
-$('tiers').innerHTML=Object.values(T).map(t=>`<tr><td><span class="chip" style="background:${t[2]}">${t[0]}</span></td><td>${t[3]}</td><td>${t[1]}점</td></tr>`).join('');
+
 let mode='daily',G=null,timer=0,tagT=0;
 function tag(text,col){const t=$('tag');t.textContent=text;t.style.color=col||'';t.classList.add('on');clearTimeout(tagT);tagT=setTimeout(()=>t.classList.remove('on'),2600)}
 let curScreen='home';
@@ -862,10 +1320,10 @@ function show(id){curScreen=id;document.querySelectorAll('.card').forEach(c=>c.c
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-pressed',x===b));home()});
 document.querySelectorAll('[data-back]').forEach(b=>b.onclick=home);
 $('helpbtn').onclick=()=>show('help');
-function setScoreHud(){$('sc').textContent=`${G?G.score:0}점`}
+function setScoreHud(){$('sc').textContent=`${G?G.score:0}${tx('점',' pts')}`}
 function home(){
- clearInterval(timer);G=null;show('home');$('home2').textContent='처음으로';$('mdesc').textContent=MD[mode];
- const d=mode==='daily'&&LS.get('dd-daily-'+kstDate());$('go').textContent=d?(d.fin?'결과 보기':'이어서 오르기'):'오르기 시작';
+ clearInterval(timer);G=null;show('home');$('home2').textContent=tx('처음으로','Home');$('mdesc').textContent=tx(MD[mode],MDE[mode]);
+ const d=mode==='daily'&&LS.get('dd-daily-'+kstDate());$('go').textContent=d?(d.fin?tx('결과 보기','View results'):tx('이어서 오르기','Resume ascent')):tx('오르기 시작','Begin ascent');
  me.n=5;me.pal=BAL;climb(me,0);others.clear();
 }
 const dailyList=()=>shuffle(BANK,rng('dd'+kstDate())).slice(0,7);
@@ -878,32 +1336,32 @@ $('go').onclick=()=>{
 function ask(){
  if(G.mode==='endless'&&G.i>=G.list.length)G.list=G.list.concat(shuffle(BANK));
  const p=BANK[G.list[G.i]];show('play');setScoreHud();
- $('qn').textContent=G.mode==='endless'?`${G.i+1}번째 질문 · 풍선 ${G.balloons}개`:`질문 ${G.i+1} / ${G.n}`;
- $('qq').textContent=p.q;$('ai').value='';$('ai').disabled=false;$('af').classList.remove('hide');$('wait').classList.add('hide');$('tm').classList.remove('hide');
+ $('qn').textContent=G.mode==='endless'?tx(`${G.i+1}번째 질문 · 풍선 ${G.balloons}개`,`Question ${G.i+1} · ${G.balloons} balloons`):tx(`질문 ${G.i+1} / ${G.n}`,`Question ${G.i+1} / ${G.n}`);
+ $('qq').textContent=qtext(p);$('ai').value='';$('ai').disabled=false;$('af').classList.remove('hide');$('wait').classList.add('hide');$('tm').classList.remove('hide');
  setTimeout(()=>$('ai').focus({preventScroll:true}),60);
  const t0=Date.now(),D=25000;clearInterval(timer);G.busy=false;G.answered=false;
- timer=setInterval(()=>{if(G.busy)return;const left=D-(Date.now()-t0);$('tmb').style.width=Math.max(0,left/D*100)+'%';$('qt').textContent=Math.max(0,Math.ceil(left/1000))+'초';$('tm').classList.toggle('low',left<6000);if(left<=0){clearInterval(timer);submit($('ai').value,true)}},100);
+ timer=setInterval(()=>{if(G.busy)return;const left=D-(Date.now()-t0);$('tmb').style.width=Math.max(0,left/D*100)+'%';$('qt').textContent=Math.max(0,Math.ceil(left/1000))+tx('초','s');$('tm').classList.toggle('low',left<6000);if(left<=0){clearInterval(timer);submit($('ai').value,true)}},100);
 }
 async function submit(text,timeout){
  if(G.busy||G.answered)return;G.busy=true;const g0=G;clearInterval(timer);
  const p=BANK[G.list[G.i]];text=text.trim();let r=-1,t;
- if(!text)t='miss';else{r=match(p,text);if(r>=0)t=tierOf(r);else{$('ai').disabled=true;const tg=$('tag');tg.textContent='생각 중…';tg.style.color='';tg.classList.add('on');t=await judge(p,text)}}
+ if(!text)t='miss';else{r=match(p,text);if(r>=0)t=tierOf(r);else{$('ai').disabled=true;const tg=$('tag');tg.textContent=tx('생각 중…','Thinking…');tg.style.color='';tg.classList.add('on');const jr=await judge(p,text);t=jr.t;if(jr.r>=0)r=jr.r}}
  if(G!==g0)return;G.answered=true;
  const pts=T[t][1];G.score+=pts;addF(pts*20);
  if(G.mode==='endless'){if(!text){G.balloons--;const L=LAY[G.balloons+1]||[];const b=L[L.length-1];if(b)pop(W/2+b[0],KY-7+b[1],me.pal[G.balloons%5])}else if(t==='sky'&&G.balloons<3)G.balloons++;me.n=G.balloons}
- G.res.push({q:p.q,a:text||(timeout?'(시간 초과)':'(패스)'),t});
+ G.res.push({q:qtext(p),a:text||(timeout?tx('(시간 초과)','(time up)'):tx('(패스)','(passed)')),t});
  if(G.key)LS.set(G.key,{res:G.res,score:G.score});
- climb(me,altToS(scoreAlt(G.score)));tag(pts?`${T[t][0]} +${pts}`:T[t][0],T[t][2]);setScoreHud();
+ climb(me,altToS(scoreAlt(G.score)));tag(pts?`${tn(t)} +${pts}`:tn(t),T[t][2]);setScoreHud();
  G.last={p,r,t,text,pts};
  if(G.mode==='mp'){mpAnswered(t,text);return}
  setTimeout(()=>G&&reveal(),900);
 }
-function verdictHTML(L){return `<span class="chip" style="background:${T[L.t][2]}">${T[L.t][0]}</span><span class="pts">+${L.pts}</span><span class="you">내 답: ${esc(L.text||'없음')}</span>`}
+function verdictHTML(L){return `<span class="chip" style="background:${T[L.t][2]}">${tn(L.t)}</span><span class="pts">+${L.pts}</span><span class="you">${tx('내 답','Your answer')}: ${esc(L.text||tx('없음','none'))}</span>`}
 function boardHTML(p,r){return p.a.map((al,i)=>`<li class="${i===r?'hit':''}"><em style="color:${T[tierOf(i)][2]}">${i+1}</em>${esc(al[0])}</li>`).join('')}
 function reveal(){
- const L=G.last;show('rev');$('rvh').textContent='공개';$('rvt').textContent=`${G.score}점`;$('rvq').textContent=L.p.q;
+ const L=G.last;show('rev');$('rvh').textContent=tx('공개','Reveal');$('rvt').textContent=`${G.score}${tx('점',' pts')}`;$('rvq').textContent=qtext(L.p);
  $('verd').innerHTML=verdictHTML(L);$('board').innerHTML=boardHTML(L.p,L.r);$('mpans').classList.add('hide');
- const last=G.mode==='endless'?G.balloons<=0:G.i>=G.n-1;$('next').classList.remove('hide');$('next').textContent=last?'결과 보기':'다음 질문';$('next').focus({preventScroll:true});
+ const last=G.mode==='endless'?G.balloons<=0:G.i>=G.n-1;$('next').classList.remove('hide');$('next').textContent=last?tx('결과 보기','See results'):tx('다음 질문','Next question');$('next').focus({preventScroll:true});
 }
 $('next').onclick=()=>{if(!G||G.mode==='mp')return;const last=G.mode==='endless'?G.balloons<=0:G.i>=G.n-1;G.i++;last?finish():ask()};
 $('af').onsubmit=e=>{e.preventDefault();if($('ai').value.trim())submit($('ai').value)};
@@ -912,14 +1370,14 @@ function finish(){
  clearInterval(timer);show('done');$('podium').classList.add('hide');const alt=scoreAlt(G.score);climb(me,altToS(alt));
  if(G.key)LS.set(G.key,{res:G.res,score:G.score,fin:true});
  const bk='dd-best-'+G.mode,best=Math.max(LS.get(bk)||0,G.score);LS.set(bk,best);
- $('dtitle').textContent=G.mode==='daily'?`일일 도전 · ${kstDate()}`:G.mode==='classic'?'클래식':'무한 모드';
- $('dkm').textContent=fmtAlt(alt);$('dsub').textContent=`${G.score}점 · ${Z[zAt(altToS(alt))][0]}까지 · 최고 기록 ${fmtAlt(scoreAlt(best))}`;
- $('dres').innerHTML=G.res.map(x=>`<li><div>${esc(x.q)}<small>${esc(x.a)}</small></div><span class="chip" style="background:${T[x.t][2]}">${T[x.t][0]}</span></li>`).join('');
- $('dnote').textContent=G.mode==='daily'?'내일 새 질문이 올라와요.':'';$('again').classList.add('hide');
+ $('dtitle').textContent=G.mode==='daily'?tx(`일일 도전 · ${kstDate()}`,`Daily climb · ${kstDate()}`):G.mode==='classic'?tx('클래식','Classic'):tx('무한 모드','Endless');
+ $('dkm').textContent=fmtAlt(alt);$('dsub').textContent=tx(`${G.score}점 · ${zname(zAt(altToS(alt)))}까지 · 최고 기록 ${fmtAlt(scoreAlt(best))}`,`${G.score} pts · reached ${zname(zAt(altToS(alt)))} · best ${fmtAlt(scoreAlt(best))}`);
+ $('dres').innerHTML=G.res.map(x=>`<li><div>${esc(x.q)}<small>${esc(x.a)}</small></div><span class="chip" style="background:${T[x.t][2]}">${tn(x.t)}</span></li>`).join('');
+ $('dnote').textContent=G.mode==='daily'?tx('내일 새 질문이 올라와요.','New questions tomorrow.'):'';$('again').classList.add('hide');
  const rows=[];for(let i=0;i<G.res.length;i+=10)rows.push(G.res.slice(i,i+10).map(x=>SQ[x.t]).join(''));
- G.share=`두둥실 ${G.mode==='daily'?'일일 '+kstDate():G.mode==='classic'?'클래식':'무한'}\n${rows.join('\n')}\n🎈 ${fmtAlt(alt)} (${G.score}점)`;
+ G.share=`두둥실 ${G.mode==='daily'?tx('일일 ','Daily ')+kstDate():G.mode==='classic'?tx('클래식','Classic'):tx('무한','Endless')}\n${rows.join('\n')}\n🎈 ${fmtAlt(alt)} (${G.score}${tx('점',' pts')})`;
 }
-$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(G.share);$('copy').textContent='복사됨'}catch(e){$('copy').textContent='복사 실패'}setTimeout(()=>$('copy').textContent='결과 복사',1500)};
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(G.share);$('copy').textContent=tx('복사됨','Copied')}catch(e){$('copy').textContent=tx('복사 실패','Copy failed')}setTimeout(()=>$('copy').textContent=tx('결과 복사','Copy results'),1500)};
 $('home2').onclick=()=>{if(MP.on)leaveRoom();else home()};
 
 /* ---------- multiplayer ---------- */
@@ -927,18 +1385,18 @@ const MP={on:false,code:'',nr:null,host:false,st:null,key:'',seed:'',phAt:0,pub:
 let pubRooms=[];
 const myName=()=>{let n=($('nick').value||'').trim().slice(0,12);if(!n){n=LS.get('dd-name')||('크릴'+(100+Math.floor(Math.random()*900)));$('nick').value=n}LS.set('dd-name',n);return n};
 $('nick').value=LS.get('dd-name')||'';
-function mpOff(){$('mpmsg').textContent='멀티플레이 서버가 아직 설정되지 않았어요. config.js에 Supabase 정보를 넣어 주세요.';$('mkroom').disabled=true}
+function mpOff(){$('mpmsg').textContent=tx('멀티플레이 서버가 아직 설정되지 않았어요. config.js에 Supabase 정보를 넣어 주세요.','The multiplayer server is not set up yet.');$('mkroom').disabled=true}
 $('mpbtn').onclick=()=>{show('mpl');renderPub()};
 function initLobby(){room.onPeers(c=>{pubRooms=c.peers.filter(p=>!p.isMe&&p.presence&&p.presence.pub&&typeof p.presence.pub.c==='string'&&/^\d{6}$/.test(p.presence.pub.c));renderPub()},()=>{});
  const m=location.hash.match(/^#r(\d{6})$/);if(m){$('jcode').value=m[1];show('mpl')}}
-function renderPub(){const ul=$('publist');if(!pubRooms.length){ul.innerHTML='<li><small>지금 열린 공개 방이 없어요.</small></li>';return}
- ul.innerHTML=pubRooms.slice(0,20).map(p=>{const b=p.presence.pub,n=Math.max(1,Math.min(40,+b.n||1));return `<li><div>${esc(String(b.nm||'방장').slice(0,12))}의 방<small>${n}/40명 · ${b.ph==='lobby'?'대기 중':'진행 중'}</small></div><button class="k c" data-j="${esc(b.c)}" ${n>=40?'disabled':''}>참가</button></li>`}).join('');
+function renderPub(){const ul=$('publist');if(!pubRooms.length){ul.innerHTML=`<li><small>${tx('지금 열린 공개 방이 없어요.','No public rooms open right now.')}</small></li>`;return}
+ ul.innerHTML=pubRooms.slice(0,20).map(p=>{const b=p.presence.pub,n=Math.max(1,Math.min(40,+b.n||1));return `<li><div>${tx(esc(String(b.nm||'방장').slice(0,12))+'의 방',esc(String(b.nm||'Host').slice(0,12))+"'s room")}<small>${n}/40${tx('명','')} · ${b.ph==='lobby'?tx('대기 중','waiting'):tx('진행 중','in game')}</small></div><button class="k c" data-j="${esc(b.c)}" ${n>=40?'disabled':''}>${tx('참가','Join')}</button></li>`}).join('');
  ul.querySelectorAll('[data-j]').forEach(b=>b.onclick=()=>enterRoom(b.dataset.j,false,false))}
 $('nf').onsubmit=e=>{e.preventDefault();if($('mkroom').disabled)return;$('nick').blur();enterRoom(String(Math.floor(100000+Math.random()*900000)),true,$('pubcb').checked)};
-$('jf').onsubmit=e=>{e.preventDefault();const c=$('jcode').value.trim();if(/^\d{6}$/.test(c))enterRoom(c,false,false);else $('mpmsg').textContent='6자리 숫자 코드를 입력해 주세요.'};
+$('jf').onsubmit=e=>{e.preventDefault();const c=$('jcode').value.trim();if(/^\d{6}$/.test(c))enterRoom(c,false,false);else $('mpmsg').textContent=tx('6자리 숫자 코드를 입력해 주세요.','Enter the 6-digit room code.')};
 async function enterRoom(code,asHost,pub){
  if(!room){mpOff();return}
- try{MP.nr=await room.join('dd-'+code)}catch(e){$('mpmsg').textContent='방에 들어갈 수 없어요. 잠시 후 다시 시도해 주세요.';return}
+ try{MP.nr=await room.join('dd-'+code)}catch(e){$('mpmsg').textContent=tx('방에 들어갈 수 없어요. 잠시 후 다시 시도해 주세요.',"Couldn't join the room. Try again in a moment.");return}
  Object.assign(MP,{on:true,code,host:asHost,pub,st:null,key:'',seed:'',phAt:Date.now(),joinedAt:Date.now()});G=null;others.clear();me.n=5;me.pal=BAL;climb(me,0);
  const pres={nm:myName(),sc:0,ar:-1,at:null,aa:null,ci:Math.floor(Math.random()*5)};
  if(asHost)Object.assign(pres,{host:1,st:{ph:'lobby',n:7}});
@@ -949,7 +1407,7 @@ async function enterRoom(code,asHost,pub){
 }
 function leaveRoom(){clearInterval(timer);try{MP.unsub&&MP.unsub();MP.nr&&MP.nr.leave()}catch(e){}if(MP.pub&&room)room.presence({pub:null}).catch(()=>{});Object.assign(MP,{on:false,nr:null,host:false,st:null,pub:false});others.clear();home()}
 $('leave').onclick=leaveRoom;
-$('copycode').onclick=async()=>{const url=location.origin+location.pathname+'#r'+MP.code;const text=`두둥실 같이 하자! 방 코드 ${MP.code}\n${url}`;try{if(navigator.share){await navigator.share({text})}else{await navigator.clipboard.writeText(text)}$('copycode').textContent='완료'}catch(e){try{await navigator.clipboard.writeText(text);$('copycode').textContent='복사됨'}catch(_){$('copycode').textContent='복사 실패'}}setTimeout(()=>$('copycode').textContent='초대하기',1500)};
+$('copycode').onclick=async()=>{const url=location.origin+location.pathname+'#r'+MP.code;const text=tx(`두둥실 같이 하자! 방 코드 ${MP.code}`,`Play Dudungsil with me! Room code ${MP.code}`)+`\n${url}`;try{if(navigator.share){await navigator.share({text})}else{await navigator.clipboard.writeText(text)}$('copycode').textContent=tx('완료','Done')}catch(e){try{await navigator.clipboard.writeText(text);$('copycode').textContent='복사됨'}catch(_){$('copycode').textContent='복사 실패'}}setTimeout(()=>$('copycode').textContent=tx('초대하기','Invite'),1500)};
 const overlay=new Map(),OK_F=['nm','sc','ar','at','aa','sd','st','host','ci'];
 const heard=new Map();let mineAll={};
 function players(){if(!MP.nr)return[];const now=Date.now(),m=new Map();
@@ -957,7 +1415,7 @@ function players(){if(!MP.nr)return[];const now=Date.now(),m=new Map();
  heard.forEach((t,peer)=>{if(!m.has(peer)&&now-t<10000)m.set(peer,{peer,sameTab:false,isMe:false,kind:'viewer',guest:false,presence:{}})});
  return[...m.values()].map(p=>{const o=!p.sameTab&&overlay.get(p.peer);return o?Object.assign({},p,{presence:Object.assign({},p.presence,o)}):p}).filter(p=>p.kind==='viewer'&&p.presence&&typeof p.presence.nm==='string')}
 function mpSet(patch){if(!MP.nr)return Promise.resolve();for(const k in patch){if(patch[k]===null)delete mineAll[k];else mineAll[k]=patch[k]}try{if(MP.nr.emit)MP.nr.emit('pl',patch).catch(()=>{})}catch(e){}return MP.nr.presence(patch)}
-const pname=p=>p.sameTab?'나':String(p.presence.nm).slice(0,12);
+const pname=p=>p.sameTab?tx('나','Me'):String(p.presence.nm).slice(0,12);
 const psc=p=>{const v=+p.presence.sc;return Number.isFinite(v)?Math.max(0,Math.min(5000,v)):0};
 function validSt(s){return s&&typeof s==='object'&&['lobby','q','rv','end'].includes(s.ph)&&(s.ph==='lobby'||(Number.isInteger(s.r)&&s.r>=0&&s.r<20&&Number.isInteger(s.n)&&s.n>=1&&s.n<=20&&typeof s.seed==='string'&&s.seed.length<20))}
 function hostPeer(){return players().filter(p=>p.presence.host&&validSt(p.presence.st)).sort((a,b)=>a.peer<b.peer?-1:1)[0]}
@@ -973,8 +1431,8 @@ function sync(){
  renderRoom();if(MP.st&&MP.st.ph==='rv'&&!$('rev').classList.contains('hide'))renderMpAns();if(MP.st&&MP.st.ph==='end'&&!$('done').classList.contains('hide'))renderEnd();
  if(MP.pub&&MP.host&&room){const pb=JSON.stringify([ps.length,MP.st&&MP.st.ph]);if(pb!==MP.lastPub){MP.lastPub=pb;room.presence({pub:{c:MP.code,nm:myName(),n:ps.length,ph:MP.st?MP.st.ph:'lobby'}}).catch(()=>{})}}
 }
-function renderRoom(){const ps=players(),hp=hostPeer();$('pcount').textContent=`${ps.length}/40명`;
- $('plist').innerHTML=[...ps].sort((a,b)=>psc(b)-psc(a)).map(p=>`<li><div>${esc(pname(p))}${hp&&p.peer===hp.peer?' <small style="display:inline;color:var(--gold)">방장</small>':''}</div><div class="r">${psc(p)}점</div></li>`).join('');
+function renderRoom(){const ps=players(),hp=hostPeer();$('pcount').textContent=tx(`${ps.length}/40명`,`${ps.length}/40 players`);
+ $('plist').innerHTML=[...ps].sort((a,b)=>psc(b)-psc(a)).map(p=>`<li><div>${esc(pname(p))}${hp&&p.peer===hp.peer?' <small style="display:inline;color:var(--gold)">'+tx('방장','host')+'</small>':''}</div><div class="r">${psc(p)}${tx('점',' pts')}</div></li>`).join('');
  $('hostctl').classList.toggle('hide',!MP.host);$('waithost').classList.toggle('hide',MP.host)}
 function setSt(st){mpSet({st,host:1}).then(sync).catch(()=>{})}
 $('startmp').onclick=()=>{if(MP.host)setSt({ph:'q',r:0,n:+$('rounds').value,seed:String(Date.now()%1e9)})};
@@ -992,19 +1450,27 @@ function onState(st){
  else if(st.ph==='end'){clearInterval(timer);show('done');renderEnd()}
 }
 function mpAnswered(t,text){MP.score=G.score;mpSet({sc:G.score,ar:G.i,at:t,aa:(text||'').slice(0,30),sd:MP.seed}).catch(()=>{});
- $('af').classList.add('hide');$('tm').classList.add('hide');$('wait').classList.remove('hide');$('wait').textContent=`${T[t][0]} +${T[t][1]} · 다른 사람을 기다리는 중…`}
-function mpReveal(list,st){const p=BANK[list[st.r]];show('rev');$('rvh').textContent=`공개 · 질문 ${st.r+1} / ${st.n}`;$('rvt').textContent=`${MP.score||0}점`;$('rvq').textContent=p.q;
- const L=G&&G.answered&&G.i===st.r?G.last:null;$('verd').innerHTML=L?verdictHTML(L):'<span class="you">이번 질문엔 답하지 못했어요.</span>';
+ $('af').classList.add('hide');$('tm').classList.add('hide');$('wait').classList.remove('hide');$('wait').textContent=`${tn(t)} +${T[t][1]} · ${tx('다른 사람을 기다리는 중…','waiting for others…')}`}
+function mpReveal(list,st){const p=BANK[list[st.r]];show('rev');$('rvh').textContent=tx(`공개 · 질문 ${st.r+1} / ${st.n}`,`Reveal · Question ${st.r+1} / ${st.n}`);$('rvt').textContent=`${MP.score||0}${tx('점',' pts')}`;$('rvq').textContent=qtext(p);
+ const L=G&&G.answered&&G.i===st.r?G.last:null;$('verd').innerHTML=L?verdictHTML(L):`<span class="you">${tx('이번 질문엔 답하지 못했어요.',"You didn't answer this one.")}</span>`;
  $('board').innerHTML=boardHTML(p,L?L.r:-1);$('mpans').classList.remove('hide');$('next').classList.add('hide');renderMpAns()}
 function renderMpAns(){const st=MP.st;const ps=[...players()].sort((a,b)=>psc(b)-psc(a));
- $('mpans').innerHTML=ps.map(p=>{const ok=p.presence.ar===st.r&&p.presence.sd===st.seed,t=ok&&Object.prototype.hasOwnProperty.call(T,p.presence.at)?p.presence.at:'miss';return `<li><div>${esc(pname(p))}<small>${ok?esc(String(p.presence.aa||'(패스)').slice(0,30)):'(답 없음)'}</small></div><div class="r"><span class="chip" style="background:${T[t][2]}">${T[t][0]}</span>${psc(p)}점</div></li>`}).join('')}
+ $('mpans').innerHTML=ps.map(p=>{const ok=p.presence.ar===st.r&&p.presence.sd===st.seed,t=ok&&Object.prototype.hasOwnProperty.call(T,p.presence.at)?p.presence.at:'miss';return `<li><div>${esc(pname(p))}<small>${ok?esc(String(p.presence.aa||tx('(패스)','(passed)')).slice(0,30)):tx('(답 없음)','(no answer)')}</small></div><div class="r"><span class="chip" style="background:${T[t][2]}">${tn(t)}</span>${psc(p)}${tx('점',' pts')}</div></li>`}).join('')}
 function renderEnd(){const ps=[...players()].sort((a,b)=>psc(b)-psc(a)),mine=ps.findIndex(p=>p.sameTab);
- const rank=p=>1+ps.filter(q=>psc(q)>psc(p)).length,pod=ps.slice(0,3),slot=i=>{const p=pod[i];return `<div class="pd p${i+1}${p&&p.sameTab?' me':''}"><b>${p?esc(pname(p)):'—'}</b><small>${p?psc(p)+'점':''}</small><div class="blk">${p?rank(p):i+1}</div></div>`};
+ const rank=p=>1+ps.filter(q=>psc(q)>psc(p)).length,pod=ps.slice(0,3),slot=i=>{const p=pod[i];return `<div class="pd p${i+1}${p&&p.sameTab?' me':''}"><b>${p?esc(pname(p)):'—'}</b><small>${p?psc(p)+tx('점',' pts'):''}</small><div class="blk">${p?rank(p):i+1}</div></div>`};
  const ph=slot(1)+slot(0)+slot(2);if(ph!==MP.podHTML){MP.podHTML=ph;$('podium').innerHTML=ph}$('podium').classList.remove('hide');
- $('dtitle').textContent=`멀티플레이 · 방 ${MP.code}`;const myRank=mine<0?0:1+ps.filter(q=>psc(q)>psc(ps[mine])).length;$('dkm').textContent=myRank===1?'1등!':`${myRank}등`;$('dsub').textContent=`${MP.score||0}점 · ${fmtAlt(scoreAlt(MP.score||0))}`;
- $('dres').innerHTML=ps.map((p,i)=>`<li><div>${1+ps.filter(q=>psc(q)>psc(p)).length}. ${esc(pname(p))}<small>${fmtAlt(scoreAlt(psc(p)))}</small></div><div class="r">${psc(p)}점</div></li>`).join('');
- $('again').classList.toggle('hide',!MP.host);$('dnote').textContent=MP.host?'':'방장이 다시 시작할 수 있어요.';$('home2').textContent='나가기';
- G={share:`두둥실 멀티플레이 ${myRank}등 / ${ps.length}명\n🎈 ${fmtAlt(scoreAlt(MP.score||0))} (${MP.score||0}점)`}}
+ $('dtitle').textContent=tx(`멀티플레이 · 방 ${MP.code}`,`Multiplayer · Room ${MP.code}`);const myRank=mine<0?0:1+ps.filter(q=>psc(q)>psc(ps[mine])).length;$('dkm').textContent=myRank===1?tx('1등!','1st!'):tx(`${myRank}등`,ord(myRank));$('dsub').textContent=`${MP.score||0}${tx('점',' pts')} · ${fmtAlt(scoreAlt(MP.score||0))}`;
+ $('dres').innerHTML=ps.map((p,i)=>`<li><div>${1+ps.filter(q=>psc(q)>psc(p)).length}. ${esc(pname(p))}<small>${fmtAlt(scoreAlt(psc(p)))}</small></div><div class="r">${psc(p)}${tx('점',' pts')}</div></li>`).join('');
+ $('again').classList.toggle('hide',!MP.host);$('dnote').textContent=MP.host?'':tx('방장이 다시 시작할 수 있어요.','The host can start a new game.');$('home2').textContent=tx('나가기','Leave');
+ G={share:`두둥실 멀티플레이 ${myRank}등 / ${ps.length}명\n🎈 ${fmtAlt(scoreAlt(MP.score||0))} (${MP.score||0}${tx('점',' pts')})`}}
+
+function drawTiers(){$('tiers').innerHTML=Object.keys(T).map(k=>`<tr><td><span class="chip" style="background:${T[k][2]}">${tn(k)}</span></td><td>${tx(T[k][3],TDE[k])}</td><td>${T[k][1]}${tx('점',' pts')}</td></tr>`).join('')}
+function applyLang(){document.documentElement.lang=lang;
+ document.querySelectorAll('[data-en]').forEach(el=>{if(el.dataset.ko===undefined)el.dataset.ko=el.textContent;el.textContent=lang==='en'?el.dataset.en:el.dataset.ko});
+ document.querySelectorAll('[data-en-ph]').forEach(el=>{if(el.dataset.koPh===undefined)el.dataset.koPh=el.placeholder;el.placeholder=lang==='en'?el.dataset.enPh:el.dataset.koPh});
+ document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.l===lang)));drawTiers();setAiNote()}
+document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>{lang=b.dataset.l;try{localStorage.setItem('dd-lang',lang)}catch(e){}applyLang();if(curScreen==='home')home();else if(curScreen==='play'&&G&&G.list)$('qq').textContent=qtext(BANK[G.list[G.i]])});
+applyLang();
 home();
 }
 </script>
