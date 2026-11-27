@@ -175,7 +175,7 @@ select{height:44px;background:#050a14;color:var(--ink);border:1px solid var(--li
 </section>
 
 </div></div>
-<script src="config.js?v=11"></script>
+<script src="config.js?v=12"></script>
 <script src="vendor/supabase.js"></script>
 <script>
 {
@@ -575,7 +575,108 @@ TV 예능 프로그램|무한도전;런닝맨;나 혼자 산다;1박2일;놀면 
 날씨 종류|맑음;비;눈;흐림;바람;태풍;안개;천둥번개
 자연재해|지진;태풍;홍수;산불;가뭄;쓰나미;폭설;화산 폭발
 불 끄는 방법|소화기;물;119 신고/119;모래;담요;소방차;스프링클러;입으로 불기
-긴급 전화번호|112;119;120;114;1330;110;182;117`.split('\n').map(l=>{const[q,a]=l.split('|');return{q,a:a.split(';').map(s=>s.split('/'))}});
+긴급 전화번호|112;119;120;114;1330;110;182;117
+아침 출근길에 사는 것|커피/아메리카노;김밥;토스트;샌드위치;빵;물;우유;삼각김밥
+야근할 때 먹는 것|커피;컵라면/라면;김밥;과자;에너지드링크/핫식스;치킨;피자;햄버거
+점심시간에 하는 일|밥 먹기/식사;낮잠/잠;산책;커피 마시기/커피;휴대폰;운동;수다;은행 가기
+회의 시간에 하는 일|메모/필기;졸기;휴대폰;발표;커피 마시기;딴생각;고개 끄덕이기;질문
+직장인이 꿈꾸는 것|퇴사;로또;여행;승진;월급 인상/연봉 인상;칼퇴;휴가;건물주
+주말 아침에 먹는 것|브런치;토스트;라면;시리얼;팬케이크;계란;김치볶음밥;커피
+브런치 메뉴|팬케이크;에그 베네딕트;샐러드;프렌치토스트;샌드위치;오믈렛;베이글;와플
+샌드위치 속 재료|햄;치즈;양상추;토마토;계란;베이컨;참치;오이
+피자 토핑|페퍼로니;치즈;불고기;파인애플;베이컨;올리브;버섯;고구마
+햄버거 속 재료|패티/고기;치즈;양상추;토마토;양파;피클;소스/케첩;베이컨
+떡볶이 종류|국물떡볶이;치즈떡볶이;로제떡볶이;라볶이;짜장떡볶이;기름떡볶이;궁중떡볶이;엽떡
+고기 부위|삼겹살;목살;갈비;등심;안심;항정살;차돌박이;우삼겹
+고기 구울 때 필요한 것|불판;집게;가위;상추;쌈장;숯;기름;마늘
+회 종류|광어;연어;우럭;참치;도미;방어;오징어;전어
+해산물 이름|새우;오징어;조개;게;문어;굴;전복;낙지
+국수 종류|잔치국수;칼국수;냉면;비빔국수;쌀국수;우동;짜장면;콩국수
+여름에 먹는 음식|냉면;수박;빙수;삼계탕;콩국수;아이스크림;물회;메밀소바
+복날 먹는 음식|삼계탕;백숙;장어;추어탕;수박;닭죽;오리고기;냉면
+생일날 먹는 음식|미역국;케이크;고기;잡채;치킨;피자;초밥;떡
+한국 길거리 음식|떡볶이;어묵;호떡;붕어빵;순대;닭꼬치;계란빵;핫도그
+핫도그에 뿌리는 것|케첩;설탕;머스터드;치즈;마요네즈;칠리소스;파슬리;허니머스터드
+라면 끓일 때 실수하는 것|물 너무 많이/물 조절;면 불기/불어버림;스프 너무 많이;덜 익힘;넘침;탐;계란 터짐;냄비 바닥 탐
+양념의 종류|간장;고추장;된장;소금;설탕;참기름;고춧가루;마늘
+한국 사람이 쓰는 주방 도구|가위;밥솥;도마;칼;국자;집게;냄비;프라이팬
+식탁 위에 있는 것|숟가락;젓가락;밥;김치;반찬;물;휴지;국
+편의점 꿀조합|라면과 삼각김밥;불닭과 치즈;떡볶이와 순대;컵라면과 소시지;바나나우유와 빵;마크정식;도시락과 컵라면;콜라와 과자
+바나나맛 우유 하면 떠오르는 것|노란색;목욕탕;빨대;편의점;어린 시절;달콤함;빙그레;단지 모양
+목욕탕 하면 떠오르는 것|때밀이/세신;바나나우유;사우나;냉탕;온탕;때수건;아빠;수건
+한국 사람이 자주 가는 곳|카페;편의점;PC방;노래방;찜질방;식당;마트;헬스장
+노래방에서 부르는 신나는 노래 장르|댄스;아이돌;힙합;록;트로트;디스코;EDM;응원가
+축제 하면 떠오르는 것|불꽃놀이;먹거리;공연;사람 많음;부스;주점;연예인;축제 노래
+불꽃놀이 하면 떠오르는 것|여의도;한강;하늘;사람 많음;데이트;여름;폭죽;연인
+여름 휴가 준비물|수영복;선크림;선글라스;모자;튜브;슬리퍼;카메라;여권
+수영장에서 하는 일|수영;물놀이;다이빙;튜브 타기;사진 찍기;선탠;물장구;컵라면 먹기
+워터파크 하면 떠오르는 것|파도풀;슬라이드;튜브;수영복;선크림;줄 서기;구명조끼;캐리비안베이
+스키장에서 하는 일|스키;보드;눈썰매;사진 찍기;리프트 타기;컵라면 먹기;넘어지기;강습
+캠핑장에서 하는 일|고기 굽기/바비큐;불멍;텐트 치기;별 보기;마시멜로 굽기;산책;음악 듣기;잠
+등산할 때 챙기는 것|물;등산화;간식;모자;선크림;김밥;등산스틱;수건
+한국의 유명한 산|한라산;설악산;지리산;북한산;백두산;남산;관악산;태백산
+한국의 유명한 바다|해운대;광안리;경포대;을왕리;속초;강릉;제주;대천
+기차 여행 하면 떠오르는 것|KTX;도시락/기차 도시락;창밖 풍경;삶은 계란;간식;여행;부산;기차표
+비행기 타기 전에 하는 일|체크인;짐 부치기;면세점;화장실;충전;환전;여권 확인;밥 먹기
+여행지에서 사는 기념품|마그넷/자석;열쇠고리/키링;엽서;과자;티셔츠;인형;컵;술
+호텔 방에 있는 것|침대;수건;TV;냉장고;슬리퍼;가운;금고;커피포트
+외국에서 그리운 한국 음식|김치;라면;떡볶이;김치찌개;삼겹살;치킨;짜장면;된장찌개
+유학생이 힘든 것|외로움;언어/영어;향수병;음식;돈;과제;친구 사귀기;비자
+미국 대학교 하면 떠오르는 것|기숙사;파티;캠퍼스;학비;과제;도서관;풋볼;졸업식
+기숙사 하면 떠오르는 것|룸메이트;이층 침대;통금;라면;좁은 방;공용 화장실;세탁실;시끄러움
+룸메이트와 싸우는 이유|청소;소음;설거지;냄새;손님;온도;물건 빌리기;늦게 들어옴
+수강신청 할 때 기분|긴장;초조;짜증;절망;기쁨;설렘;스트레스;분노
+대학생이 자주 먹는 음식|학식;라면;치킨;편의점 음식;피자;마라탕;떡볶이;커피
+시험 기간에 늘어나는 것|커피;야식;스트레스;잠;다크서클;군것질;몸무게;걱정
+조별과제 하면 떠오르는 것|무임승차;발표;회의;단톡방;PPT;스트레스;자료조사;역할 분담
+졸업식 하면 떠오르는 것|꽃다발;학사모;사진;가족;눈물;졸업장;짜장면;친구
+의사 하면 떠오르는 것|흰 가운;청진기;병원;수술;돈;공부;바쁨;환자
+간호사가 하는 일|주사;혈압 측정;환자 돌보기;약 주기;기록;야간 근무;붕대 감기;체온 측정
+변호사 하면 떠오르는 것|법원;재판;정장;돈;서류;의뢰인;법;드라마
+선생님이 되면 힘든 것|학생 관리;잔소리;수업 준비;학부모;채점;생활기록부;업무;목 아픔
+요리사 하면 떠오르는 것|칼;요리 모자;앞치마;주방;불;맛;레스토랑;흑백요리사
+유튜버가 되면 좋은 점|돈;자유;유명세;취미가 일;협찬;시간;팬;재미
+게임하다가 하는 말|아;뭐야;버그;렉/렉 걸렸어;한 판만 더;졌다;이겼다;핵
+축구 경기 볼 때 먹는 것|치킨;맥주;피자;과자;족발;라면;콜라;떡볶이
+응원할 때 하는 말|파이팅/화이팅;힘내;대한민국;잘한다;가자;할 수 있다;최고;이겨라
+월드컵 하면 떠오르는 것|손흥민;응원;치킨;붉은 악마;2002년;축구;새벽;골
+운동하고 나서 먹는 것|닭가슴살;단백질 쉐이크/프로틴;물;바나나;고구마;계란;이온음료;치킨
+다이어트 실패하는 이유|야식;치킨;술;스트레스;의지 부족;회식;배달 음식;단 음식
+살찌는 음식|치킨;피자;라면;햄버거;떡볶이;빵;과자;아이스크림
+요가 하면 떠오르는 것|매트;스트레칭;명상;호흡;유연성;레깅스;다이어트;평화
+자전거 탈 때 필요한 것|헬멧;자전거;물;장갑;자물쇠;선글라스;라이트;따릉이
+반려견 산책할 때 챙기는 것|목줄/리드줄;배변봉투;간식;물;휴지;장난감;물티슈;휴대폰
+고양이 키우면 필요한 것|모래/고양이 모래;사료;화장실;캣타워;장난감;스크래처;츄르;물그릇
+강아지 이름으로 많이 쓰는 이름|초코;코코;보리;뭉치;콩이;몽이;해피;두부
+유명한 강아지 품종|말티즈;푸들;시바견;리트리버;포메라니안;진돗개;비숑;치와와
+동물원 하면 떠오르는 곳|에버랜드;서울대공원;어린이대공원;아쿠아리움;사파리;동물원;롯데월드;주렁주렁
+식물 키울 때 필요한 것|물;햇빛;화분;흙;비료;관심;분무기;바람
+집에서 키우는 식물|선인장;몬스테라;스투키;다육이;고무나무;산세베리아;허브;장미
+집들이 선물|휴지;세제;화분;와인;디퓨저;수건;조명;그릇
+이사할 때 힘든 것|짐 싸기;짐 정리;돈;청소;집 구하기;이삿짐센터;버리기;주소 변경
+집 구할 때 보는 것|가격/월세;위치;역세권;채광;크기;층수;보안;주변 환경
+원룸에 꼭 있어야 하는 것|침대;냉장고;세탁기;에어컨;인터넷;책상;옷장;전자레인지
+층간소음의 원인|발소리;아이들 뛰는 소리;음악;청소기;강아지 짖는 소리;가구 끄는 소리;세탁기;문 닫는 소리
+택배 기다릴 때 하는 일|배송 조회;문 앞 확인;기다리기;새로고침;알림 확인;설렘;문자 확인;짜증
+쿠팡에서 자주 사는 것|생수/물;휴지;세제;라면;간식;생활용품;옷;전자기기
+온라인 쇼핑할 때 보는 것|리뷰;가격;별점;사진;배송비;사이즈;할인;브랜드
+환불하는 이유|사이즈;불량;색깔;마음에 안 듦;배송 지연;사진과 다름;변심;가격
+세일할 때 사는 것|옷;신발;화장품;전자기기;가방;생활용품;식품;향수
+블랙프라이데이에 사는 것|전자기기;노트북;옷;신발;TV;게임기;화장품;이어폰
+신용카드 하면 떠오르는 것|할부;포인트;카드값;혜택;연회비;결제;빚;한도
+돈 생기면 사고 싶은 것|집;차;명품;옷;노트북;휴대폰;여행;시계
+용돈으로 하는 일|간식;저축;옷 사기;게임 현질;친구랑 놀기;책;화장품;교통비
+알바 하면 떠오르는 곳|편의점;카페;식당;PC방;영화관;과외;패스트푸드점;물류센터
+알바하면서 힘든 것|손님/진상;서 있기;시급;사장님;야간;외우기;청소;시간
+카페 알바가 하는 일|커피 만들기;설거지;계산;청소;주문 받기;재고 정리;빵 굽기;마감
+SNS에 올리는 사진|음식;셀카;여행;카페;풍경;반려동물;친구;옷
+셀카 찍을 때 하는 포즈|브이;볼하트;손하트;윙크;입술 내밀기;턱 괴기;메롱;손으로 얼굴 가리기
+인생네컷 하면 떠오르는 것|친구;머리띠/소품;포즈;사진;커플;추억;스티커;거울
+유행어 하면 떠오르는 것|럭키비키;킹받네;중꺾마;어쩔티비;갓생;MZ;별다줄;내또출
+줄임말 예시|ㅇㅈ/인정;ㄹㅇ/레알;ㅂㅂ/바이바이;JMT/존맛탱;TMI;별다줄;아아;생파
+아이돌 응원 문화|응원봉;슬로건;생일 카페;떼창;팬레터;굿즈;포토카드;앨범 사기
+포토카드 하면 떠오르는 것|아이돌;앨범;교환;탑로더;바인더;최애;랜덤;비싸다
+덕질 하면 떠오르는 것|최애;굿즈;콘서트;팬미팅;앨범;돈;행복;포토카드`.split('\n').map(l=>{const[q,a]=l.split('|');return{q,a:a.split(';').map(s=>s.split('/'))}});
 const EN=`Things people often lose|umbrella;phone/cellphone/smartphone/mobile;wallet;keys/key;earphones/earbuds/airpods/headphones;remote/remote control/tv remote;pen/ballpoint pen;gloves
 First thing you do after waking up|check phone/look at phone/phone;go to the bathroom/bathroom/toilet/pee;drink water/water;turn off alarm/alarm/snooze;wash face/brush teeth/shower;stretch;check the time/time;make the bed
 Things you often buy at a convenience store|triangle kimbap/onigiri/rice ball/samgak kimbap;drink/drinks/soda/beverage/juice;coffee;snacks/chips;cup noodles/cup ramen/instant noodles/ramen;water;lunch box/dosirak/bento;ice cream
@@ -972,7 +1073,108 @@ Planets in the solar system|earth;mars;jupiter;saturn;venus;mercury;uranus;neptu
 Types of weather|sunny/clear;rain/rainy;snow/snowy;cloudy;wind/windy;typhoon/hurricane;fog/foggy;thunderstorm/lightning
 Natural disasters|earthquake;typhoon/hurricane;flood;wildfire/forest fire;drought;tsunami;blizzard/heavy snow;volcanic eruption/volcano
 Ways to put out a fire|fire extinguisher;water;call 119/call 911/call the fire department;sand;blanket;fire truck;sprinkler;blow it out
-Emergency phone numbers|112;119;120;114;1330;110;182;117`.split('\n').map(l=>{const[q,a]=l.split('|');return{q,a:a.split(';').map(s=>s.split('/'))}});
+Emergency phone numbers|112;119;120;114;1330;110;182;117
+Things you buy on the morning commute|coffee/americano;kimbap;toast;sandwich;bread;water;milk;triangle kimbap/onigiri
+What you eat when working late|coffee;cup noodles/ramen;kimbap;snacks/chips;energy drink;fried chicken/chicken;pizza;hamburger/burger
+What you do on your lunch break|eat lunch/eat;nap/sleep;walk;get coffee/coffee;phone;exercise/gym;chat/gossip;go to the bank
+What people do in meetings|take notes/notes;doze off/sleep;phone;present/presentation;drink coffee;daydream/zone out;nod;ask questions
+What office workers dream of|quitting/quit my job;lottery;travel;promotion;raise/pay raise;leaving on time;vacation;owning a building/landlord
+What you eat on weekend mornings|brunch;toast;ramen;cereal;pancakes;eggs;kimchi fried rice/fried rice;coffee
+Brunch menu|pancakes;eggs benedict;salad;french toast;sandwich;omelet/omelette;bagel;waffles/waffle
+Sandwich fillings|ham;cheese;lettuce;tomato;egg;bacon;tuna;cucumber
+Pizza toppings|pepperoni;cheese;bulgogi;pineapple;bacon;olives/olive;mushrooms/mushroom;sweet potato
+What goes in a burger|patty/meat/beef;cheese;lettuce;tomato;onion;pickles/pickle;sauce/ketchup;bacon
+Types of tteokbokki|soupy tteokbokki;cheese tteokbokki;rose tteokbokki;rabokki;jajang tteokbokki;oil tteokbokki;royal court tteokbokki/gungjung;yupdduk
+Cuts of meat|pork belly/samgyeopsal;pork neck/moksal;ribs/galbi;sirloin;tenderloin;pork jowl/hangjeongsal;brisket/chadolbagi;beef belly
+What you need for a Korean BBQ|grill;tongs;scissors;lettuce;ssamjang;charcoal;oil;garlic
+Types of raw fish|flatfish/flounder/halibut;salmon;rockfish;tuna;sea bream;yellowtail;squid;gizzard shad
+Types of seafood|shrimp/prawn;squid;clams/clam;crab;octopus;oysters/oyster;abalone;small octopus/nakji
+Types of noodles|banquet noodles/janchi guksu;knife noodles/kalguksu;cold noodles/naengmyeon;spicy mixed noodles/bibim guksu;pho/rice noodles;udon;jajangmyeon;soy milk noodles/kongguksu
+Summer foods|cold noodles/naengmyeon;watermelon;bingsu/shaved ice;samgyetang/ginseng chicken soup;kongguksu/soy milk noodles;ice cream;mulhoe/cold raw fish soup;cold soba/soba
+Food for the hottest days (boknal)|samgyetang/ginseng chicken soup;baeksuk/boiled chicken;eel;loach soup/chueotang;watermelon;chicken porridge;duck;cold noodles
+Food eaten on birthdays|seaweed soup/miyeokguk;cake;meat;japchae;fried chicken/chicken;pizza;sushi;rice cake
+Korean street food|tteokbokki;fish cake/odeng;hotteok;bungeoppang/fish bread;sundae;chicken skewers;egg bread;corn dog/hot dog
+Toppings for a Korean corn dog|ketchup;sugar;mustard;cheese;mayonnaise/mayo;chili sauce;parsley;honey mustard
+Common mistakes when cooking ramen|too much water;soggy noodles/overcooked;too much soup powder;undercooked;boiling over;burning it;egg breaking;burnt pot
+Types of seasoning|soy sauce;gochujang/red pepper paste;doenjang/soybean paste;salt;sugar;sesame oil;red pepper flakes/gochugaru;garlic
+Kitchen tools Koreans use|scissors;rice cooker;cutting board;knife;ladle;tongs;pot;frying pan
+Things on a Korean dining table|spoon;chopsticks;rice;kimchi;side dishes/banchan;water;tissues/napkins;soup
+Best convenience store combos|ramen and triangle kimbap;buldak and cheese;tteokbokki and sundae;cup noodles and sausage;banana milk and bread;mark set/mark jeongsik;lunch box and cup noodles;coke and chips
+Things you think of with banana milk|yellow;bathhouse;straw;convenience store;childhood;sweet;binggrae;jar shape
+Things you think of with a public bathhouse|body scrub/seshin;banana milk;sauna;cold bath;hot bath;scrub towel;dad;towel
+Places Koreans often go|cafe;convenience store;pc bang/internet cafe;karaoke/noraebang;jjimjilbang/sauna;restaurant;supermarket/mart;gym
+Upbeat karaoke songs|dance;idol/kpop;hip hop;rock;trot;disco;edm;cheer songs
+Things you think of with festivals|fireworks;food stalls/food;performances/concerts;crowds;booths;pop-up bars;celebrities;festival songs
+Things you think of with fireworks|yeouido;han river;sky;crowds;date;summer;firecrackers;couples
+Summer vacation packing list|swimsuit;sunscreen;sunglasses;hat;swim ring/float;flip flops/slippers;camera;passport
+What you do at a pool|swim;play in the water;dive;float on a tube;take pictures;tan/sunbathe;splash;eat cup noodles
+Things you think of with water parks|wave pool;water slide/slide;tube/float;swimsuit;sunscreen;waiting in line;life jacket;caribbean bay
+What you do at a ski resort|ski;snowboard;sledding;take pictures;ride the lift;eat cup noodles;fall down;take lessons
+What you do at a campsite|grill meat/barbecue;stare at the fire;set up the tent;stargaze;roast marshmallows;walk;listen to music;sleep
+What you bring when hiking|water;hiking boots;snacks;hat;sunscreen;kimbap;hiking poles/trekking poles;towel
+Famous mountains in Korea|hallasan/mount halla;seoraksan;jirisan;bukhansan;baekdusan/mount paektu;namsan;gwanaksan;taebaeksan
+Famous beaches in Korea|haeundae;gwangalli;gyeongpodae;eurwangni;sokcho;gangneung;jeju;daecheon
+Things you think of with train trips|ktx;train lunch box/dosirak;scenery out the window;boiled eggs;snacks;travel;busan;train ticket
+What you do before boarding a plane|check in;check bags;duty free;bathroom;charge phone;exchange money;check passport;eat
+Souvenirs you buy on trips|magnet/fridge magnet;keychain;postcard;snacks/local snacks;t-shirt;plushie/doll;mug/cup;alcohol/liquor
+Things in a hotel room|bed;towels;tv;mini fridge/fridge;slippers;bathrobe/robe;safe;kettle/coffee pot
+Korean food you miss abroad|kimchi;ramen;tteokbokki;kimchi stew;samgyeopsal/pork belly;fried chicken/chicken;jajangmyeon;doenjang stew
+Hardest parts of studying abroad|loneliness;language/english;homesickness;food;money;assignments/homework;making friends;visa
+Things you think of with US colleges|dorm/dorms;parties;campus;tuition;assignments/homework;library;football;graduation
+Things you think of with dorms|roommate;bunk bed;curfew;ramen;small room;shared bathroom;laundry room;noise
+Reasons roommates fight|cleaning;noise;dishes;smell;guests;temperature;borrowing things;coming home late
+Feelings during course registration|nervous;anxious;annoyed;despair;happy;excited;stressed;angry
+Foods college students often eat|cafeteria food/dining hall;ramen;fried chicken/chicken;convenience store food;pizza;malatang;tteokbokki;coffee
+Things that increase during exam season|coffee;late-night snacks;stress;sleepiness/sleep;dark circles;snacking;weight;worry
+Things you think of with group projects|free rider/freeloader;presentation;meetings;group chat;slides/powerpoint;stress;research;dividing roles
+Things you think of with graduation|bouquet/flowers;graduation cap;photos;family;tears;diploma;jajangmyeon;friends
+Things you think of with doctors|white coat;stethoscope;hospital;surgery;money;studying;busy;patients
+What nurses do|give shots/injections;take blood pressure;care for patients;give medicine;charting/records;night shifts;bandaging;take temperature
+Things you think of with lawyers|court;trial;suit;money;documents/paperwork;client;law;dramas
+Hard parts of being a teacher|managing students;nagging;lesson planning;parents;grading;student records;paperwork;sore throat
+Things you think of with chefs|knife;chef's hat;apron;kitchen;fire;taste;restaurant;culinary class wars
+Perks of being a YouTuber|money;freedom;fame;hobby becomes work;sponsorships;free time;fans;fun
+Things people say while gaming|argh/ahh;what;bug;lag;one more game;lost;won/we won;hacker/hacks
+What you eat while watching a soccer match|fried chicken/chicken;beer;pizza;snacks/chips;jokbal;ramen;coke/soda;tteokbokki
+Things you shout when cheering|fighting/hwaiting;cheer up;dae-han-min-guk/korea;well done/nice;let's go;you can do it;the best;win
+Things you think of with the World Cup|son heung-min;cheering;fried chicken;red devils;2002;soccer;late nights/dawn;goal
+What you eat after working out|chicken breast;protein shake/protein;water;banana;sweet potato;eggs;sports drink;fried chicken
+Why diets fail|late-night snacks;fried chicken;alcohol;stress;lack of willpower;company dinners;delivery food;sweets
+Fattening foods|fried chicken/chicken;pizza;ramen;hamburger/burger;tteokbokki;bread;snacks/chips;ice cream
+Things you think of with yoga|mat/yoga mat;stretching;meditation;breathing;flexibility;leggings;diet/weight loss;peace
+What you need to ride a bike|helmet;bike/bicycle;water;gloves;lock;sunglasses;light/bike light;ddareungi/bike share
+What you bring when walking a dog|leash;poop bags;treats;water;tissues;toy;wet wipes;phone
+Things you need for a cat|litter/cat litter;cat food/food;litter box;cat tower;toys;scratcher/scratching post;churu/treats;water bowl
+Popular dog names in Korea|choco;coco;bori;mungchi;kongi;mongi;happy;dubu/tofu
+Popular dog breeds|maltese;poodle;shiba inu/shiba;retriever/golden retriever;pomeranian;jindo/jindo dog;bichon/bichon frise;chihuahua
+Places you think of for seeing animals|everland;seoul grand park;children's grand park;aquarium;safari;zoo;lotte world;zoolung zoolung
+What plants need|water;sunlight;pot/flower pot;soil;fertilizer;attention/care;spray bottle/mister;air/fresh air
+Houseplants|cactus;monstera;stuckyi/sansevieria stuckyi;succulent/succulents;rubber plant;snake plant/sansevieria;herbs;rose
+Housewarming gifts|toilet paper/tissue;detergent;plant/potted plant;wine;diffuser;towels;lamp/light;dishes/bowls
+Hard parts of moving|packing;unpacking;money;cleaning;finding a place/house hunting;movers;throwing things out;changing address
+What you look at when house hunting|price/rent;location;near the subway;sunlight;size;floor;security;neighborhood
+Must-haves in a studio apartment|bed;fridge;washing machine;air conditioner;internet/wifi;desk;closet;microwave
+Causes of noise from upstairs|footsteps;kids running;music;vacuum;dog barking;dragging furniture;washing machine;door slamming
+What you do while waiting for a delivery|track it/tracking;check the door;wait;refresh;check notifications;get excited;check texts;get annoyed
+Things often bought on Coupang|bottled water/water;toilet paper;detergent;ramen;snacks;household goods;clothes;electronics
+What you check when shopping online|reviews;price;star rating/ratings;photos;shipping fee;size;discount;brand
+Reasons to return something|size;defect/broken;color;didn't like it;late delivery;doesn't look like the photo;changed my mind;price
+Things you buy on sale|clothes;shoes;cosmetics/makeup;electronics;bags;household goods;food;perfume
+Things you buy on Black Friday|electronics;laptop;clothes;shoes;tv;game console;cosmetics;earbuds/airpods
+Things you think of with credit cards|installments;points/rewards;card bill;benefits/perks;annual fee;payment;debt;credit limit/limit
+What you'd buy if you had money|house;car;luxury goods/designer;clothes;laptop;phone;trip/travel;watch
+What you spend allowance on|snacks;save it/savings;clothes;in-game purchases;hanging out with friends;books;makeup;transportation
+Places you think of for part-time jobs|convenience store;cafe;restaurant;pc bang;movie theater;tutoring;fast food restaurant;warehouse
+Hard parts of a part-time job|customers/rude customers;standing all day;low pay/hourly wage;boss;night shifts;memorizing;cleaning;hours
+What cafe workers do|make coffee;wash dishes;ring up/cashier;clean;take orders;restock;bake;close the store
+Photos people post on social media|food;selfies/selfie;travel;cafes;scenery/landscape;pets;friends;outfits/ootd
+Selfie poses|v sign/peace sign;cheek heart;finger heart;wink;duck face/pout;chin rest;tongue out;covering face
+Things you think of with photo booths|friends;props/headbands;poses;photos;couples;memories;stickers;mirror
+Korean buzzwords|lucky vicky;king-badne/so annoying;never give up;whatever tv;god-life;mz;abbreviations;hi again
+Common Korean abbreviations|ij/agree;real/rl;bye bye/bb;jmt/delicious;tmi;why abbreviate everything;iced americano;birthday party
+Kpop fan culture|light stick;slogan banner;birthday cafe;fan chant/singalong;fan letters;merch;photocards;buying albums
+Things you think of with photocards|idols;albums;trading;toploader;binder;bias/favorite member;random;expensive
+Things you think of with being a fan|bias/favorite;merch;concerts;fan meeting;albums;money;happiness;photocards`.split('\n').map(l=>{const[q,a]=l.split('|');return{q,a:a.split(';').map(s=>s.split('/'))}});
 BANK.forEach((b,i)=>{const e=EN[i];if(e){b.en=e.q;b.ea=e.a}});
 let lang=(()=>{try{return localStorage.getItem('dd-lang')==='en'?'en':'ko'}catch(e){return'ko'}})();
 const tx=(k,e)=>lang==='en'?e:k;
