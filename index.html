@@ -82,6 +82,11 @@ label.cb input{width:18px;height:18px}
 select{height:44px;background:#050a14;color:var(--ink);border:1px solid var(--line2);border-radius:3px;font:16px Galmuri,sans-serif;padding:0 8px}
 .hide{display:none!important}
 @media(max-width:600px){.rows li{padding:4px 6px;font-size:14px}.card{max-height:min(56svh,calc(var(--vvh,100svh) - 70px))}}
+.chars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:12px}
+.chars button{background:#050a14;border:1px solid var(--line);border-radius:3px;padding:8px 2px 6px;color:var(--ink);font:13px Galmuri,sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;min-height:84px}
+.chars button[aria-pressed=true]{border-color:var(--gold);background:#3a2f0cb0}
+.chars canvas{image-rendering:pixelated;max-width:64px;height:auto}
+@media(max-width:400px){.chars{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .lang{display:flex;justify-content:flex-end;gap:4px;margin:-4px 0 8px}
 .lang button{height:30px;padding:0 10px;border:1px solid var(--line2);background:transparent;color:var(--faint);border-radius:2px;font:13px Galmuri,sans-serif;cursor:pointer}
 .lang button[aria-pressed=true]{color:var(--ink);background:var(--line2)}
@@ -116,7 +121,13 @@ select{height:44px;background:#050a14;color:var(--ink);border:1px solid var(--li
 <div class="tabs" role="group" aria-label="모드"><button data-m="daily" aria-pressed="true" data-en="Daily">일일</button><button data-m="classic" aria-pressed="false" data-en="Classic">클래식</button><button data-m="endless" aria-pressed="false" data-en="Endless">무한</button></div>
 <p class="desc" id="mdesc"></p>
 <div class="row"><button class="k" id="go">오르기 시작</button><button class="k c" id="mpbtn" data-en="Multiplayer">멀티플레이</button></div>
-<div class="row" style="margin-top:6px"><button class="k g" id="helpbtn" data-en="How to play">게임 방법과 점수</button></div>
+<div class="row" style="margin-top:6px"><button class="k y" id="charbtn" data-en="Characters">캐릭터</button><button class="k g" id="helpbtn" data-en="How to play">게임 방법과 점수</button></div>
+</section>
+
+<section class="card hide" id="chars">
+<div class="eb"><span data-en="Choose your character">캐릭터 고르기</span></div>
+<div class="chars" id="charlist"></div>
+<div class="row"><button class="k g" data-back data-en="Back">돌아가기</button></div>
 </section>
 
 <section class="card hide" id="help">
@@ -175,7 +186,7 @@ select{height:44px;background:#050a14;color:var(--ink);border:1px solid var(--li
 </section>
 
 </div></div>
-<script src="config.js?v=15"></script>
+<script src="config.js?v=16"></script>
 <script src="vendor/supabase.js"></script>
 <script>
 {
@@ -1245,6 +1256,31 @@ function fmtAlt(m){if(m<1000)return Math.round(m)+' m';const km=m/1000;if(km<100
 const KR=["............kk.k..","......kkkkkk..k...","....kkhhhhhhkk....","k..kphhhhhhhpexk..","kkkpppppppppppppk.","kdkdpppppppppppk..","k.kddpdpdpdpddk..."];
 const LEG=["....k.k.k.k.k.....",".....k.k.k.k.k...."];
 const KP={k:'#3a0d26',p:'#ff5d8f',h:'#ff8db5',d:'#cf3a6b',e:'#f7faff',x:'#220a19'};
+
+const CH={
+krill:{nm:['크릴','Krill'],rows:KR,legs:LEG,pal:KP,grip:[9,1]},
+capy:{nm:['카피바라','Capybara'],grip:[9,1],pal:{k:'#3b2414',b:'#a8754a',l:'#c8956a',d:'#7a5232',e:'#1a0f08',n:'#4a2a18'},
+ rows:["..............kk....","....kkkkkkkkkkbbk...","..kkbbbbbbbbbbbbbkk.",".kbllllllbbbbbbbebk.",".kbllllbbbbbbbbbbbbk","kbbbbbbbbbbbbbbbbbnk","kbbbbbbbbbbbbbbbbbbk",".kdbbbbbbbbbbbbbbbk.","..kddddddddddddddk.."],
+ legs:["...kk.kk.....kk.kk..","....kk.kk...kk.kk..."]},
+axo:{nm:['아홀로틀','Axolotl'],grip:[10,2],pal:{k:'#7a2a4a',p:'#ffb3cf',l:'#ffd6e6',g:'#ff5f96',e:'#1a0610',f:'#ffc6dc'},
+ rows:["..............g.g.g.",".ff..........gkkkkkg","ffffkkkkkkkkkkpppppk","fffkppppppppppplpepk",".ffkpllllllllllppppg","..fkpppppppppppppkkg","....kkkpppppppkk.g.."],
+ legs:[".....kp...kp........","......kp...kp......."]},
+peng:{nm:['펭귄','Penguin'],grip:[6,1],pal:{k:'#101820',b:'#24324a',w:'#f4f6fb',o:'#ffa23a',e:'#0a0e14'},
+ rows:["....kkkkk....","...kbbbbbk...","..kbbbbwebk..","..kbbbwwwbooo",".kbbbwwwwwbk.",".kbbwwwwwwbk.","kbbbwwwwwwbbk","kbbbwwwwwwbbk",".kbbwwwwwwbk.",".kbbbwwwwbbk.","..kkbbbbbkk.."],
+ legs:["...oo...oo...","..oo.....oo.."]},
+frog:{nm:['개구리','Frog'],grip:[7,2],pal:{k:'#123018',b:'#4cbf4a',l:'#8fe060',d:'#2b8a3a',w:'#f4efb8',x:'#0a1a0c'},
+ rows:["..kkk......kkk..",".kwxk.....kwxk..",".kbbbkkkkkbbbk..","kbbllllllllbbbk.","kbbbbbbbbbbbbbbk","kbbkkkkkkkkkbbbk","kbbbwwwwwwwbbbk.",".kdbwwwwwwwbdk.."],
+ legs:["kddk.kk..kk.kddk",".kddkk....kkddk."]},
+cat:{nm:['고양이','Cat'],grip:[8,3],pal:{k:'#3a2210',b:'#ffb35c',l:'#ffd59a',d:'#e0892a',w:'#fff4e0',e:'#1a1008',n:'#ff8fa0'},
+ rows:[".............k..k.","............kbkkbk",".k.........kbbbbbk","kdk..kkkkkkkbbebbk","kdk.kbbbbbbbbbbbnk",".kdkbdbdbbbbbbbwbk","..kkbbbbbbbbbbbbk.","...kbbbbbbbbbbbk.."],
+ legs:["....kk.kk..kk.kk..",".....kk.kk..kk.kk."]},
+duck:{nm:['오리','Duckling'],grip:[6,5],pal:{k:'#3a2a08',y:'#ffd23f',l:'#fff3a0',o:'#ff9a2e',e:'#1a1004'},
+ rows:["........kkkk...",".......kyyyyk..",".......kyyeykoo",".kk....kyyyyk..","kyyk..kyyyyk...","kyyykkyyyyyyk..","kyllllllyyyyk..",".kyyyyyyyyyk...","..kkkkkkkkk...."],
+ legs:["....oo..oo.....","...oo....oo...."]},
+ham:{nm:['햄스터','Hamster'],grip:[7,1],pal:{k:'#3a2410',b:'#e8a860',w:'#fff2dc',n:'#ff9fb0',e:'#1a1008'},
+ rows:["..kk......kk..",".knbk....kbnk.",".kbbbkkkkbbbk.","kbbbbbbbbbbbbk","kbbebbbbbbebbk","kbwwwbnnbwwwbk","kbwwwwwwwwwwbk",".kbwwwwwwwwbk.","..kkkkkkkkkk.."],
+ legs:["...kk....kk...","..kk......kk.."]}};
+const chOf=id=>CH[id]?id:'krill';
 const SP={
 butterfly:[["a...a","aa.aa",".aka.","aa.aa"],["..k..",".aka.","aaaaa","....."]],
 bird:[["k.....k",".k...k.","..kbk..","...b..."],[".......","kkkbkkk","...b...","......."]],
@@ -1284,7 +1320,7 @@ function disc(cx,cy,r,c){ctx.fillStyle=c;for(let y=-r;y<=r;y++){const w=Math.flo
 const pal=S=>{const i=zAt(S),z=Z[i],t=(S-z[1])/(z[2]-z[1]);let a=z[5],b=z[6];if(t>.75&&Z[i+1]){const k=(t-.75)/.25;a=mix(a,Z[i+1][5],k);b=mix(b,Z[i+1][6],k)}return[a,b]};
 
 /* krill actors */
-const me={S:0,from:0,to:0,t0:0,d:1,n:5,pal:BAL,ph:0};
+const me={S:0,from:0,to:0,t0:0,d:1,n:5,pal:BAL,ph:0,ch:(()=>{try{return chOf(JSON.parse(localStorage.getItem('dd-char')))}catch(e){return'krill'}})()};
 const others=new Map();
 function climb(k,S){k.from=k.S;k.to=S;k.t0=performance.now();k.d=Math.min(3400,Math.max(900,900+Math.abs(S-k.S)*.55))}
 function stepK(k,now){const p=Math.min(1,(now-k.t0)/k.d),e=p<.5?4*p*p*p:1-(-2*p+2)**3/2;k.S=k.from+(k.to-k.from)*e}
@@ -1305,11 +1341,11 @@ function krillBody(x,y,now,ph){const n=7,R=[4.2,4.4,4,3.6,3.1,2.5,1.9],segs=[];
  ctx.fillStyle='#ff8fb4';ctx.fillRect(Math.round(hx+1),Math.round(hy),2,1);
  return[segs[2][0],segs[2][1]-segs[2][2]-1]}
 function drawKrill(cx,sy,k,now){
- const bob=Math.round(Math.sin(now/600+k.ph)*1.2),x0=Math.round(cx-9),y0=Math.round(sy-8+bob),gx=x0+9,gy=y0+1,sw=Math.sin(now/900+k.ph)*1.5;
+ const c=CH[chOf(k.ch)],w=c.rows[0].length,h=c.rows.length+1,bob=Math.round(Math.sin(now/600+k.ph)*1.2),x0=Math.round(cx-w/2),y0=Math.round(sy-h+bob),gx=x0+c.grip[0],gy=y0+c.grip[1],sw=Math.sin(now/900+k.ph)*1.5;
  const L=LAY[Math.max(0,Math.min(5,k.n))];
  L.forEach(([dx,dy])=>{const kx=gx+dx+sw,ky=gy+dy+9,mx=(kx+gx)/2+sw*.6,my=(ky+gy)/2;line(kx,ky,mx,my,'#e8f1ffb0');line(mx,my,gx,gy,'#e8f1ffb0')});
  L.forEach(([dx,dy],i)=>ctx.drawImage(balloonImg(k.pal[i%5]),Math.round(gx+dx+sw-7),Math.round(gy+dy-7)));
- spr(KR,KP,x0,y0);spr([LEG[(now/160|0)%2]],KP,x0,y0+7);
+ spr(c.rows,c.pal,x0,y0);spr([c.legs[(now/160|0)%2]],c.pal,x0,y0+c.rows.length);
 }
 
 /* particles */
@@ -1442,7 +1478,7 @@ function nameTag(id,text,x,y,isMe){let d=nmPool.get(id);if(!d){d=document.create
 let lastNow=performance.now();
 const barEl=$('abar'),barPool=new Map();
 function drawBar(ct){
- if(['home','help','mpl'].includes(curScreen)){barEl.style.display='none';return}
+ if(['home','help','mpl','chars'].includes(curScreen)){barEl.style.display='none';return}
  const top=Math.round(($('sc').getBoundingClientRect().bottom||90)-vp.getBoundingClientRect().top+14),bot=Math.max(top+80,ct-14),h=bot-top;
  barEl.style.display='block';barEl.style.top=top+'px';barEl.style.height=h+'px';
  const list=[{id:'me',label:MP.on?tx('나','Me'):'',S:me.S,T:me.to,c:me.pal[0],me:1}];
@@ -1571,7 +1607,7 @@ async function judge(p,ans){
 let mode='daily',G=null,timer=0,tagT=0;
 function tag(text,col){const t=$('tag');t.textContent=text;t.style.color=col||'';t.classList.add('on');clearTimeout(tagT);tagT=setTimeout(()=>t.classList.remove('on'),2600)}
 let curScreen='home';
-function show(id){curScreen=id;document.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',c.id!==id));$('tb').classList.toggle('hide',id!=='home');$('sc').classList.toggle('hide',id==='home'||id==='help'||id==='mpl')}
+function show(id){curScreen=id;document.querySelectorAll('.card').forEach(c=>c.classList.toggle('hide',c.id!==id));$('tb').classList.toggle('hide',id!=='home');$('sc').classList.toggle('hide',id==='home'||id==='help'||id==='mpl'||id==='chars')}
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-pressed',x===b));home()});
 document.querySelectorAll('[data-back]').forEach(b=>b.onclick=home);
 $('helpbtn').onclick=()=>show('help');
@@ -1653,7 +1689,7 @@ async function enterRoom(code,asHost,pub){
  if(!room){mpOff();return}
  try{MP.nr=await room.join('dd-'+code)}catch(e){$('mpmsg').textContent=tx('방에 들어갈 수 없어요. 잠시 후 다시 시도해 주세요.',"Couldn't join the room. Try again in a moment.");return}
  Object.assign(MP,{on:true,code,host:asHost,pub,st:null,key:'',seed:'',phAt:Date.now(),joinedAt:Date.now()});G=null;others.clear();me.n=5;me.pal=BAL;climb(me,0);
- const pres={nm:myName(),sc:0,ar:-1,at:null,aa:null,ci:Math.floor(Math.random()*5),nb:BANK.length};
+ const pres={nm:myName(),sc:0,ar:-1,at:null,aa:null,ci:Math.floor(Math.random()*5),nb:BANK.length,ch:me.ch};
  if(asHost)Object.assign(pres,{host:1,st:{ph:'lobby',n:7}});
  try{await mpSet(pres)}catch(e){}
  overlay.clear();heard.clear();mineAll={};MP.unsub=MP.nr.onPeers(()=>sync(),()=>{});
@@ -1663,7 +1699,7 @@ async function enterRoom(code,asHost,pub){
 function leaveRoom(){clearInterval(timer);try{MP.unsub&&MP.unsub();MP.nr&&MP.nr.leave()}catch(e){}if(MP.pub&&room)room.presence({pub:null}).catch(()=>{});Object.assign(MP,{on:false,nr:null,host:false,st:null,pub:false});others.clear();home()}
 $('leave').onclick=leaveRoom;
 $('copycode').onclick=async()=>{const url=location.origin+location.pathname+'#r'+MP.code;const text=tx(`두둥실 같이 하자! 방 코드 ${MP.code}`,`Play Dudungsil with me! Room code ${MP.code}`)+`\n${url}`;try{if(navigator.share){await navigator.share({text})}else{await navigator.clipboard.writeText(text)}$('copycode').textContent=tx('완료','Done')}catch(e){try{await navigator.clipboard.writeText(text);$('copycode').textContent='복사됨'}catch(_){$('copycode').textContent='복사 실패'}}setTimeout(()=>$('copycode').textContent=tx('초대하기','Invite'),1500)};
-const overlay=new Map(),OK_F=['nm','sc','ar','at','aa','sd','st','host','ci','nb'];
+const overlay=new Map(),OK_F=['nm','sc','ar','at','aa','sd','st','host','ci','nb','ch'];
 const heard=new Map();let mineAll={};
 function players(){if(!MP.nr)return[];const now=Date.now(),m=new Map();
  MP.nr.peers().forEach(p=>m.set(p.peer,p));
@@ -1681,7 +1717,7 @@ function sync(){
  const st=hp?hp.presence.st:null;
  if(st){const key=st.ph+':'+st.r+':'+st.seed;if(key!==MP.key){MP.key=key;MP.st=st;MP.phAt=Date.now();onState(st)}}
  // others' krills
- const seen=new Set();ps.forEach(p=>{if(p.sameTab)return;seen.add(p.peer);let o=others.get(p.peer);if(!o){o={S:0,from:0,to:0,t0:0,d:1,n:5,pal:PALS[(+p.presence.ci||0)%5]||BAL,ph:hs(p.peer.length)*6};others.set(p.peer,o)}o.label=pname(p);const S=altToS(scoreAlt(psc(p)));if(Math.abs(S-o.to)>.5)climb(o,S)});
+ const seen=new Set();ps.forEach(p=>{if(p.sameTab)return;seen.add(p.peer);let o=others.get(p.peer);if(!o){o={S:0,from:0,to:0,t0:0,d:1,n:5,pal:PALS[(+p.presence.ci||0)%5]||BAL,ph:hs(p.peer.length)*6};others.set(p.peer,o)}o.label=pname(p);o.ch=chOf(p.presence.ch);const S=altToS(scoreAlt(psc(p)));if(Math.abs(S-o.to)>.5)climb(o,S)});
  others.forEach((o,id)=>{if(!seen.has(id))others.delete(id)});
  renderRoom();if(MP.st&&MP.st.ph==='rv'&&!$('rev').classList.contains('hide'))renderMpAns();if(MP.st&&MP.st.ph==='end'&&!$('done').classList.contains('hide'))renderEnd();
  if(MP.pub&&MP.host&&room){const pb=JSON.stringify([ps.length,MP.st&&MP.st.ph]);if(pb!==MP.lastPub){MP.lastPub=pb;room.presence({pub:{c:MP.code,nm:myName(),n:ps.length,ph:MP.st?MP.st.ph:'lobby'}}).catch(()=>{})}}
@@ -1727,6 +1763,12 @@ function applyLang(){document.documentElement.lang=lang;
  document.querySelectorAll('[data-en-ph]').forEach(el=>{if(el.dataset.koPh===undefined)el.dataset.koPh=el.placeholder;el.placeholder=lang==='en'?el.dataset.enPh:el.dataset.koPh});
  document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.l===lang)));drawTiers();setAiNote()}
 document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>{lang=b.dataset.l;try{localStorage.setItem('dd-lang',lang)}catch(e){}applyLang();if(curScreen==='home')home();else if(curScreen==='play'&&G&&G.list)$('qq').textContent=qtext(BANK[G.list[G.i]])});
+
+function chPreview(id){const c=CH[id],w=c.rows[0].length,h=c.rows.length+1,S=4,cv2=document.createElement('canvas');cv2.width=w*S;cv2.height=h*S;const g=cv2.getContext('2d');
+ c.rows.concat([c.legs[0]]).forEach((row,r)=>{for(let x=0;x<row.length;x++){const col=c.pal[row[x]];if(!col)continue;g.fillStyle=col;g.fillRect(x*S,r*S,S,S)}});return cv2}
+function renderChars(){const box=$('charlist');box.innerHTML='';Object.keys(CH).forEach(id=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-pressed',String(me.ch===id));b.appendChild(chPreview(id));const sp=document.createElement('span');sp.textContent=tx(CH[id].nm[0],CH[id].nm[1]);b.appendChild(sp);
+ b.onclick=()=>{me.ch=id;LS.set('dd-char',id);renderChars();if(MP.on&&MP.nr)mpSet({ch:id}).catch(()=>{})};box.appendChild(b)})}
+$('charbtn').onclick=()=>{renderChars();show('chars')};
 applyLang();
 home();
 }
