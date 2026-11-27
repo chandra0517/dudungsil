@@ -175,7 +175,7 @@ select{height:44px;background:#050a14;color:var(--ink);border:1px solid var(--li
 </section>
 
 </div></div>
-<script src="config.js?v=12"></script>
+<script src="config.js?v=13"></script>
 <script src="vendor/supabase.js"></script>
 <script>
 {
@@ -1600,7 +1600,7 @@ async function enterRoom(code,asHost,pub){
  if(!room){mpOff();return}
  try{MP.nr=await room.join('dd-'+code)}catch(e){$('mpmsg').textContent=tx('방에 들어갈 수 없어요. 잠시 후 다시 시도해 주세요.',"Couldn't join the room. Try again in a moment.");return}
  Object.assign(MP,{on:true,code,host:asHost,pub,st:null,key:'',seed:'',phAt:Date.now(),joinedAt:Date.now()});G=null;others.clear();me.n=5;me.pal=BAL;climb(me,0);
- const pres={nm:myName(),sc:0,ar:-1,at:null,aa:null,ci:Math.floor(Math.random()*5)};
+ const pres={nm:myName(),sc:0,ar:-1,at:null,aa:null,ci:Math.floor(Math.random()*5),nb:BANK.length};
  if(asHost)Object.assign(pres,{host:1,st:{ph:'lobby',n:7}});
  try{await mpSet(pres)}catch(e){}
  overlay.clear();heard.clear();mineAll={};MP.unsub=MP.nr.onPeers(()=>sync(),()=>{});
@@ -1610,7 +1610,7 @@ async function enterRoom(code,asHost,pub){
 function leaveRoom(){clearInterval(timer);try{MP.unsub&&MP.unsub();MP.nr&&MP.nr.leave()}catch(e){}if(MP.pub&&room)room.presence({pub:null}).catch(()=>{});Object.assign(MP,{on:false,nr:null,host:false,st:null,pub:false});others.clear();home()}
 $('leave').onclick=leaveRoom;
 $('copycode').onclick=async()=>{const url=location.origin+location.pathname+'#r'+MP.code;const text=tx(`두둥실 같이 하자! 방 코드 ${MP.code}`,`Play Dudungsil with me! Room code ${MP.code}`)+`\n${url}`;try{if(navigator.share){await navigator.share({text})}else{await navigator.clipboard.writeText(text)}$('copycode').textContent=tx('완료','Done')}catch(e){try{await navigator.clipboard.writeText(text);$('copycode').textContent='복사됨'}catch(_){$('copycode').textContent='복사 실패'}}setTimeout(()=>$('copycode').textContent=tx('초대하기','Invite'),1500)};
-const overlay=new Map(),OK_F=['nm','sc','ar','at','aa','sd','st','host','ci'];
+const overlay=new Map(),OK_F=['nm','sc','ar','at','aa','sd','st','host','ci','nb'];
 const heard=new Map();let mineAll={};
 function players(){if(!MP.nr)return[];const now=Date.now(),m=new Map();
  MP.nr.peers().forEach(p=>m.set(p.peer,p));
@@ -1619,7 +1619,7 @@ function players(){if(!MP.nr)return[];const now=Date.now(),m=new Map();
 function mpSet(patch){if(!MP.nr)return Promise.resolve();for(const k in patch){if(patch[k]===null)delete mineAll[k];else mineAll[k]=patch[k]}try{if(MP.nr.emit)MP.nr.emit('pl',patch).catch(()=>{})}catch(e){}return MP.nr.presence(patch)}
 const pname=p=>p.sameTab?tx('나','Me'):String(p.presence.nm).slice(0,12);
 const psc=p=>{const v=+p.presence.sc;return Number.isFinite(v)?Math.max(0,Math.min(5000,v)):0};
-function validSt(s){return s&&typeof s==='object'&&['lobby','q','rv','end'].includes(s.ph)&&(s.ph==='lobby'||(Number.isInteger(s.r)&&s.r>=0&&s.r<20&&Number.isInteger(s.n)&&s.n>=1&&s.n<=20&&typeof s.seed==='string'&&s.seed.length<20))}
+function validSt(s){return s&&typeof s==='object'&&['lobby','q','rv','end'].includes(s.ph)&&(s.ph==='lobby'||(Number.isInteger(s.r)&&s.r>=0&&s.r<20&&Number.isInteger(s.n)&&s.n>=1&&s.n<=20&&typeof s.seed==='string'&&s.seed.length<20&&(s.q===undefined||(Array.isArray(s.q)&&s.q.length===s.n&&s.q.every(x=>Number.isInteger(x)&&x>=0&&x<5000)))))}
 function hostPeer(){return players().filter(p=>p.presence.host&&validSt(p.presence.st)).sort((a,b)=>a.peer<b.peer?-1:1)[0]}
 function sync(){
  if(!MP.on)return;const ps=players();let hp=hostPeer();
@@ -1635,18 +1635,20 @@ function sync(){
 }
 function renderRoom(){const ps=players(),hp=hostPeer();$('pcount').textContent=tx(`${ps.length}/40명`,`${ps.length}/40 players`);
  $('plist').innerHTML=[...ps].sort((a,b)=>psc(b)-psc(a)).map(p=>`<li><div>${esc(pname(p))}${hp&&p.peer===hp.peer?' <small style="display:inline;color:var(--gold)">'+tx('방장','host')+'</small>':''}</div><div class="r">${psc(p)}${tx('점',' pts')}</div></li>`).join('');
- $('hostctl').classList.toggle('hide',!MP.host);$('waithost').classList.toggle('hide',MP.host)}
+ $('hostctl').classList.toggle('hide',!MP.host);$('waithost').classList.toggle('hide',MP.host);
+ const nbs=ps.map(p=>p.presence.nb).filter(x=>Number.isInteger(x)),old=nbs.some(x=>x!==BANK.length);let w=$('verwarn');if(!w){w=document.createElement('p');w.id='verwarn';w.className='note';$('plist').after(w)}w.textContent=old?(nbs.some(x=>x>BANK.length)?tx('새 버전이 나왔어요. 페이지를 새로고침하면 질문이 더 많아져요.','A newer version is out. Refresh the page to get all the questions.'):tx('옛날 버전을 쓰는 사람이 있어요. 모두 새로고침하면 질문이 더 많아져요. (그래도 같은 질문으로 함께 할 수 있어요.)','Someone has an older version. Everyone should refresh to get all questions (you can still play together).')):'';w.style.display=old?'':'none'}
 function setSt(st){mpSet({st,host:1}).then(sync).catch(()=>{})}
-$('startmp').onclick=()=>{if(MP.host)setSt({ph:'q',r:0,n:+$('rounds').value,seed:String(Date.now()%1e9)})};
-$('again').onclick=()=>{if(MP.on&&MP.host)setSt({ph:'q',r:0,n:MP.st.n,seed:String(Date.now()%1e9)})};
+function pickQs(n,seed){const ps=players(),lim=Math.max(1,Math.min(BANK.length,...ps.map(p=>Number.isInteger(p.presence.nb)&&p.presence.nb>0?p.presence.nb:BANK.length)));return shuffle(BANK.slice(0,lim),rng('mp'+seed)).slice(0,n)}
+$('startmp').onclick=()=>{if(!MP.host)return;const n=+$('rounds').value,seed=String(Date.now()%1e9);setSt({ph:'q',r:0,n,seed,q:pickQs(n,seed)})};
+$('again').onclick=()=>{if(!(MP.on&&MP.host))return;const n=MP.st.n,seed=String(Date.now()%1e9);setSt({ph:'q',r:0,n,seed,q:pickQs(n,seed)})};
 setInterval(()=>{if(!MP.on)return;sync();if(MP.nr&&MP.nr.emit&&(MP.hb=(MP.hb||0)+1)%2===0){try{MP.nr.emit('pl',Object.assign({},mineAll,MP.host&&MP.st?{st:MP.st,host:1}:{})).catch(()=>{})}catch(e){}}},1500);
 setInterval(()=>{if(!MP.on||!MP.host||!MP.st)return;const st=MP.st,now=Date.now();
- if(st.ph==='q'){const ps=players(),all=ps.length&&ps.every(p=>p.presence.ar===st.r&&p.presence.sd===st.seed);if(now>MP.phAt+26500||(all&&now>MP.phAt+1500))setSt({ph:'rv',r:st.r,n:st.n,seed:st.seed})}
- else if(st.ph==='rv'&&now>MP.phAt+8000)setSt(st.r+1<st.n?{ph:'q',r:st.r+1,n:st.n,seed:st.seed}:{ph:'end',r:st.r,n:st.n,seed:st.seed})},300);
+ if(st.ph==='q'){const ps=players(),all=ps.length&&ps.every(p=>p.presence.ar===st.r&&p.presence.sd===st.seed);if(now>MP.phAt+26500||(all&&now>MP.phAt+1500))setSt({ph:'rv',r:st.r,n:st.n,seed:st.seed,q:st.q})}
+ else if(st.ph==='rv'&&now>MP.phAt+8000)setSt(st.r+1<st.n?{ph:'q',r:st.r+1,n:st.n,seed:st.seed,q:st.q}:{ph:'end',r:st.r,n:st.n,seed:st.seed,q:st.q})},300);
 function onState(st){
  if(st.ph==='lobby'){clearInterval(timer);G=null;show('mpr');return}
  if(st.seed!==MP.seed){MP.seed=st.seed;MP.podHTML='';MP.score=0;MP.res=[];climb(me,0);mpSet({sc:0,ar:-1,at:null,aa:null,sd:st.seed}).catch(()=>{})}
- const list=shuffle(BANK,rng('mp'+st.seed)).slice(0,st.n);
+ const okq=Array.isArray(st.q)&&st.q.every(x=>x<BANK.length),list=okq?st.q:shuffle(BANK,rng('mp'+st.seed)).slice(0,st.n);
  if(st.ph==='q'){G={mode:'mp',list,i:st.r,n:st.n,score:MP.score,res:MP.res,balloons:5};ask()}
  else if(st.ph==='rv'){clearInterval(timer);mpReveal(list,st)}
  else if(st.ph==='end'){clearInterval(timer);show('done');renderEnd()}
